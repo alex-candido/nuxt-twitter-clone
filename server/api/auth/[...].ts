@@ -3,8 +3,6 @@ import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export default NuxtAuthHandler({
-  // secret needed to run nuxt-auth in production mode (used to encrypt data)
-  secret: process.env.NUXT_SECRET,
   providers: [
     // @ts-ignore Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     CredentialsProvider.default({
@@ -60,4 +58,12 @@ export default NuxtAuthHandler({
       },
     }),
   ],
+  debug: process.env.NODE_ENV === 'development',
+  session: {
+    strategy: 'jwt',
+  },
+  jwt: {
+    secret: process.env.NUXTAUTH_JWT_SECRET,
+  },
+  secret: process.env.NUXTAUTH_SECRET,
 })

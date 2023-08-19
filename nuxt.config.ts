@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
+    '@sidebase/nuxt-auth',
     [
       '@pinia/nuxt',
       {
@@ -14,5 +15,5 @@ export default defineNuxtConfig({
       },
     ],
   ],
-  
+
 })

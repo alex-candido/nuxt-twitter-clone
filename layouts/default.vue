@@ -1,4 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const darkMode = ref(true)
+</script>
 <template>
-  <div><slot /></div>
+  <div :class="{ dark: darkMode }" class="bg-white dark:bg-dim-900">
+    <ModalsLogin />
+    <MainSection>
+      <slot />
+    </MainSection>
+  </div>
 </template>

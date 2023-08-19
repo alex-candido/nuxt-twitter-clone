@@ -77,7 +77,7 @@ const handleSubmit = () => {
 
         <!-- footer -->
         <div class="flex flex-col gap-2 p-10">
-          <Button
+          <ElementsButton
             :disabled="disabled"
             :label="actionLabel"
             secondary

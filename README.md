@@ -1,63 +1,49 @@
-# Nuxt 3 Minimal Starter
+<img alt="banner" src="/public/images/twitter-banner.png" />
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Full Stack Twitter Clone
 
-## Setup
+## 🚀 Approaches
 
-Make sure to install the dependencies:
+## 📌 Was used
 
-```bash
-# npm
-npm install
+#### Project Dependencies
 
-# pnpm
-pnpm install
+#### Development Dependencies
 
-# yarn
-yarn install
+## ▶️ Starting the application
+
+#### Prerequisites
+
+- Node version v18.15.0
+
+- Clone this repository
+```
+$ git clone https://github.com/alex-candido/nuxt-twitter-clone.git
+```
+- Install dependencies
+```
+$ yarn add
 ```
 
-## Development Server
+- Setup .env file
+```
+DATABASE_URL=
+NEXTAUTH_JWT_SECRET=
+NEXTAUTH_SECRET=
+```
+- Start Prisma
+```
+$ yarn prisma generate
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
+$ yarn prisma db push
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
+- Start the project
+```
+$ yarn dev
 ```
 
-Locally preview production build:
+<img src="/public/images/home-page.png" alt="home">
+<img src="/public/images/profile-page.png" alt="profile">
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Made by Alex Cândido [Linkedin](https://www.linkedin.com/in/alexcndd/)

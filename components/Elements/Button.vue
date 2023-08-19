@@ -1,14 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-interface ButtonProps {
-  label: string
-  secondary?: boolean
-  fullWidth?: boolean
-  large?: boolean
-  disabled?: boolean
-  outline?: boolean
-}
-
 const props = defineProps({
   label: {
     type: String,
@@ -34,7 +25,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-}) as ButtonProps
+})
 
 const emits = defineEmits<{
   (e: 'onClick', value: Event): void

@@ -1,3 +1,5 @@
+import { createUser } from '../db/users'
+
 export default defineEventHandler(async (event) => {
   const method = event.method
 
@@ -24,12 +26,16 @@ export default defineEventHandler(async (event) => {
       email,
       name,
       username,
-      password,
+      hashedPassword: password,
     }
+
+    const user = await createUser(userData)
+
+    console.log(userData)
 
     return {
       method,
-      userData,
+      userData: user,
     }
   } catch (error) {
     return sendError(

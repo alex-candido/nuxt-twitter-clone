@@ -1,3 +1,4 @@
+import { User } from '@prisma/client'
 import * as bcrypt from 'bcrypt'
 import prisma from '../libs/prismadb'
 
@@ -8,7 +9,7 @@ export interface UserDataProps {
   name: string | null
 }
 
-export const createUser = async (userData: UserDataProps) => {
+export const createUser = async (userData: UserDataProps): Promise<User> => {
   const finalUserData = {
     ...userData,
     hashedPassword: bcrypt.hashSync(userData.hashedPassword, 10),
@@ -21,5 +22,19 @@ export const createUser = async (userData: UserDataProps) => {
   if (!user) {
     console.log('Not found user')
   }
+  return user
+}
+
+export const getUserByEmail = async (email: string): Promise<User> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  })
+
+  if (!user) {
+    throw new Error('Not found user')
+  }
+
   return user
 }

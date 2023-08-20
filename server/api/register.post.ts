@@ -26,6 +26,7 @@ export default defineEventHandler(async (event) => {
       username,
       password,
     }
+
     return {
       method,
       userData,

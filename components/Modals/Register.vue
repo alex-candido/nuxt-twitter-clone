@@ -32,6 +32,13 @@ const onSubmit = async () => {
   try {
     currentRegister.isLoading = true
 
+    await register({
+      email: currentRegister.email,
+      password: currentRegister.password,
+      username: currentRegister.username,
+      name: currentRegister.name,
+    })
+
     currentRegister.isLoading = false
 
     await register({

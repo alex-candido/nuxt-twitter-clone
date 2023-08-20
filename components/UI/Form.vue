@@ -43,7 +43,7 @@ const handleSubmit = async () => {
 
 <template>
   <div class="border-b-[1px] border-neutral-600 px-5 py-2">
-    <template v-if="true">
+    <template v-if="false">
       <div class="flex flex-row gap-4">
         <div>
           <UIAvatar :user-id="'xfbbbedbedbberbrebre'" />

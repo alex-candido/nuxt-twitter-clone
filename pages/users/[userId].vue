@@ -12,7 +12,7 @@ const { userId } = router.currentRoute.value.params
     <div v-else>
       <UIHeader :show-back-arrow="true" :label="'UserName'" />
       <UsersHero :user-id="userId[0]" />
-      <UsersBio :user-id="userId" />
+      <UsersBio :user-id="userId[0]" />
       <PostsFeed :user-id="userId[0]" />
     </div>
   </div>

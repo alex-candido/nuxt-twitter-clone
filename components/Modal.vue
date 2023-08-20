@@ -81,8 +81,8 @@ const handleSubmit = () => {
             :disabled="disabled"
             :label="actionLabel"
             :secondary="false"
-            full-width
-            large
+            :full-width="true"
+            :large="true"
             @click="handleSubmit"
           />
           <slot name="footer"></slot>

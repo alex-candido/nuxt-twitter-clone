@@ -33,7 +33,7 @@ function onLogout(event: Event) {
 }
 </script>
 <template>
-  <div class="col-span-1 h-full pr-4 md:pr-6">
+  <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">
     <div class="flex flex-col items-end">
       <div class="space-y-2 lg:w-[230px]">
         <SidebarLogo />

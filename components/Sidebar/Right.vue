@@ -9,7 +9,7 @@ const users = [
 ]
 </script>
 <template>
-  <div class="px-6 py-4 hidden lg:block">
+  <div class="h-screen px-6 py-4 hidden lg:block dark:bg-dim-900">
     <div class="bg-neutral-800 rounded-xl p-4">
       <div class="text-white text-xl font-semibold">
         <div class="flex flex-col gap-6 mt-4">

@@ -4,8 +4,9 @@ const darkMode = ref(true)
 <template>
   <div :class="{ dark: darkMode }">
     <div class="bg-white dark:bg-dim-900">
-      <ModalsRegister />
       <ModalsLogin />
+      <ModalsRegister />
+      <ModalsEdit />
       <MainSection>
         <router-view />
       </MainSection>

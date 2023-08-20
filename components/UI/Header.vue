@@ -26,6 +26,7 @@ const handleBack = () => {
           name="ion:arrow-back-outline"
           size="1.5rem"
           color="white"
+          class="cursor-pointer hover:opacity-70 transition"
           @click="handleBack"
         />
       </template>

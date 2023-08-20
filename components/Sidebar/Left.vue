@@ -11,7 +11,7 @@ const items = [
     icon: 'bi:bell-fill',
     label: 'Notifications',
     href: '/notifications',
-    auth: true,
+    auth: false,
     alert: '',
     size: '1.3rem',
   },

@@ -20,7 +20,7 @@ const items = [
     label: 'Profile',
     href: `/users/${'any'}`,
     auth: true,
-    size: '2rem',
+    size: '1.3rem',
   },
 ]
 
@@ -51,6 +51,7 @@ function onLogout(event: Event) {
           v-if="true"
           icon="bx:log-out"
           label="Logout"
+          size="1.3rem"
           @click="onLogout"
         />
         <SidebarTweetButton icon="tabler:logout-2" label="Logout" />

@@ -2,10 +2,13 @@
 const darkMode = ref(true)
 </script>
 <template>
-  <div :class="{ dark: darkMode }" class="bg-white dark:bg-dim-900">
-    <ModalsLogin />
-    <MainSection>
-      <slot />
-    </MainSection>
+  <div :class="{ dark: darkMode }">
+    <div class="bg-white dark:bg-dim-900">
+      <ModalsRegister />
+      <ModalsLogin />
+      <MainSection>
+        <slot />
+      </MainSection>
+    </div>
   </div>
 </template>

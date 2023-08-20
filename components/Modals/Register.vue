@@ -53,25 +53,25 @@ const onSubmit = async () => {
   >
     <template #default>
       <div class="flex flex-col gap-4">
-        <Input
+        <ElementsInput
           v-model="currentRegister.email"
           placeholder="Email"
           type="email"
           :disabled="currentRegister.isLoading"
         />
-        <Input
+        <ElementsInput
           v-model="currentRegister.name"
           placeholder="Name"
           type="text"
           :disabled="currentRegister.isLoading"
         />
-        <Input
+        <ElementsInput
           v-model="currentRegister.username"
           placeholder="Username"
           type="text"
           :disabled="currentRegister.isLoading"
         />
-        <Input
+        <ElementsInput
           v-model="currentRegister.password"
           placeholder="Password"
           type="password"

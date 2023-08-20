@@ -1,6 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup></script>
 <template>
-  <div>**MainSection Component</div>
-  <div><slot /></div>
+  <div class="h-screen">
+    <div class="container h-full mx-auto xl:px-30 max-w-6xl">
+      <div class="grid grid-cols-4 h-full">
+        <SidebarLeft />
+        <div class="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-600">
+          <slot />
+        </div>
+        <SidebarRight />
+      </div>
+    </div>
+  </div>
 </template>

@@ -80,7 +80,7 @@ const handleSubmit = () => {
           <ElementsButton
             :disabled="disabled"
             :label="actionLabel"
-            secondary
+            :secondary="false"
             full-width
             large
             @click="handleSubmit"

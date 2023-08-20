@@ -1,5 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+interface ButtonProps {
+  label: string
+  secondary?: boolean
+  fullWidth?: boolean
+  large?: boolean
+  disabled?: boolean
+  outline?: boolean
+}
+
 const props = defineProps({
   label: {
     type: String,
@@ -25,7 +34,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+}) as ButtonProps
+
+console.log(props.secondary)
 
 const emits = defineEmits<{
   (e: 'onClick', value: Event): void
@@ -53,7 +64,7 @@ const buttonClasses = computed(() => {
 <template>
   <button
     :disabled="props.disabled"
-    class="disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2"
+    class="disabled:opacity-7 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2"
     :class="buttonClasses"
     @click="onClick"
   >

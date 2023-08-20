@@ -29,7 +29,7 @@ const onClick = (event: any) => {
 <template>
   <div
     :class="[
-      props.hasBorder ? 'border-4 border-black' : '',
+      props.hasBorder ? 'border-4 border-neutral-600' : '',
       props.isLarge ? 'h-32' : 'h-12',
       props.isLarge ? 'w-32' : 'w-12',
       'rounded-full',
@@ -39,7 +39,7 @@ const onClick = (event: any) => {
       'relative',
     ]"
   >
-    <img
+    <nuxt-img
       fill
       style="object-fit: cover; border-radius: 100%"
       class="absolute inset-0 object-cover w-full h-full"

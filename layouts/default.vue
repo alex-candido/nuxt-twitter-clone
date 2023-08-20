@@ -7,7 +7,7 @@ const darkMode = ref(true)
       <ModalsRegister />
       <ModalsLogin />
       <MainSection>
-        <slot />
+        <router-view />
       </MainSection>
     </div>
   </div>

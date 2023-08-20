@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup></script>
 <template>
-  <div class="h-screen">
+  <div class="min-h-full dark:bg-dim-900">
     <div class="container h-full mx-auto xl:px-30 max-w-6xl">
       <div class="grid grid-cols-4 h-full">
         <SidebarLeft />

@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
     '@sidebase/nuxt-auth',
+    '@nuxt/image',
     [
       '@pinia/nuxt',
       {

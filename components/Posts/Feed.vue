@@ -35,7 +35,7 @@ const posts = [
 ]
 </script>
 <template>
-  <div>
+  <div class="dark:bg-dim-900">
     <PostsItem
       v-for="post in posts"
       :key="post.id"

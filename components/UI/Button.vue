@@ -36,8 +36,6 @@ const props = defineProps({
   },
 }) as ButtonProps
 
-console.log(props.secondary)
-
 const emits = defineEmits<{
   (e: 'onClick', value: Event): void
 }>()

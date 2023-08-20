@@ -1,3 +1,3 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup></script>
-<template><div>**PostsCommentFeed Component</div></template>
+<template><div class="bg-dim-600">**PostsCommentFeed Component</div></template>

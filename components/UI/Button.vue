@@ -28,7 +28,7 @@ const props = defineProps({
   },
   disabled: {
     type: Boolean,
-    required: true,
+    required: false,
   },
   outline: {
     type: Boolean,

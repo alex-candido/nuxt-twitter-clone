@@ -40,32 +40,34 @@ const onSubmit = async () => {
     @close="useEditModal.onClose()"
     @submit="onSubmit"
   >
-    <div class="flex flex-col gap-4">
-      <UIImageUpload
-        v-model="currentEdit.profileImage"
-        :disabled="currentEdit.isLoading"
-        label="Upload profile image"
-      />
-      <UIImageUpload
-        v-model="currentEdit.coverImage"
-        :disabled="currentEdit.isLoading"
-        label="Upload cover image"
-      />
-      <UIInput
-        v-model="currentEdit.name"
-        placeholder="Name"
-        :disabled="currentEdit.isLoading"
-      />
-      <UIInput
-        v-model="currentEdit.username"
-        placeholder="Username"
-        :disabled="currentEdit.isLoading"
-      />
-      <UIInput
-        v-model="currentEdit.bio"
-        placeholder="Bio"
-        :disabled="currentEdit.isLoading"
-      />
-    </div>
+    <template #default>
+      <div class="flex flex-col gap-4">
+        <UIImageUpload
+          v-model="currentEdit.profileImage"
+          :disabled="currentEdit.isLoading"
+          label="Upload profile image"
+        />
+        <UIImageUpload
+          v-model="currentEdit.coverImage"
+          :disabled="currentEdit.isLoading"
+          label="Upload cover image"
+        />
+        <UIInput
+          v-model="currentEdit.name"
+          placeholder="Name"
+          :disabled="currentEdit.isLoading"
+        />
+        <UIInput
+          v-model="currentEdit.username"
+          placeholder="Username"
+          :disabled="currentEdit.isLoading"
+        />
+        <UIInput
+          v-model="currentEdit.bio"
+          placeholder="Bio"
+          :disabled="currentEdit.isLoading"
+        />
+      </div>
+    </template>
   </Modal>
 </template>

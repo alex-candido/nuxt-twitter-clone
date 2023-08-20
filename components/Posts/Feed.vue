@@ -9,14 +9,34 @@ const props = defineProps({
 
 const posts = [
   {
-    id: 'sdgaahbth68534r1sabr1',
-    body: 'Lorem ipsum',
+    id: 'string',
+    user: {
+      id: 'string',
+      name: 'string',
+      username: 'string',
+    },
+    body: 'string',
+    createdAt: 'string',
+    comments: [],
+    likedIds: [],
+  },
+  {
+    id: 'string',
+    user: {
+      id: 'string',
+      name: 'string',
+      username: 'string',
+    },
+    body: 'string',
+    createdAt: 'string',
+    comments: [],
+    likedIds: [],
   },
 ]
 </script>
 <template>
   <div>
-    <PostItem
+    <PostsItem
       v-for="post in posts"
       :key="post.id"
       :user-id="props.userId"

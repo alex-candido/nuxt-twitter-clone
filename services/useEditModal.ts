@@ -3,7 +3,7 @@ interface ModalState {
 }
 
 const state: ModalState = reactive({
-  isOpen: true,
+  isOpen: false,
 })
 
 const onOpen = () => {

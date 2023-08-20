@@ -1,3 +1,35 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script lang="ts" setup></script>
-<template><div>**UINotificationsFeedComponent</div></template>
+<script lang="ts" setup>
+const fetchedNotifications = [
+  {
+    id: 'aflhegvabv865bfb',
+    body: 'Lorem Ipsum',
+    userId: 'sdvnjosdvpvv3544114',
+    createdAt: '',
+  },
+]
+// onMounted(() => {
+//   mutateCurrentUser()
+// })
+</script>
+
+<template>
+  <div>
+    <div
+      v-if="fetchedNotifications.length === 0"
+      class="text-neutral-600 text-center p-6 text-xl"
+    >
+      No notifications
+    </div>
+    <div v-else class="flex flex-col">
+      <div
+        v-for="notification in fetchedNotifications"
+        :key="notification.id"
+        class="flex flex-row items-center p-6 gap-4 border-b-[1px] border-neutral-800"
+      >
+        <BsTwitterIcon class="text-white" size="32" />
+        <p class="text-white">{{ notification.body }}</p>
+      </div>
+    </div>
+  </div>
+</template>

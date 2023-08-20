@@ -1,4 +1,4 @@
-// @ts-ignore
 {
+  // @ts-ignore
   "extends": "../.nuxt/tsconfig.server.json"
 }

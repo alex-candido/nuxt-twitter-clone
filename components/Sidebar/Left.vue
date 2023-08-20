@@ -19,7 +19,7 @@ const items = [
     icon: 'fa6-solid:user',
     label: 'Profile',
     href: `/users/${'any'}`,
-    auth: true,
+    auth: false,
     size: '1.3rem',
   },
 ]

@@ -39,7 +39,7 @@ const onClick = (event: any) => {
       'relative',
     ]"
   >
-    <img
+    <nuxt-img
       fill
       style="object-fit: cover; border-radius: 100%"
       class="absolute inset-0 object-cover w-full h-full"

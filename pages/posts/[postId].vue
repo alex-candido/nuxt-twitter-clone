@@ -1,4 +1,7 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const router = useRouter()
+const { postId } = router.currentRoute.value.params
+</script>
 <template>
   <div>
     <UIHeader show-back-arrow label="Tweet" />
@@ -8,5 +11,6 @@
     <div v-if="true" class="flex justify-center items-center h-full">
       ClipLoader
     </div> -->
+    <div class="bg-dim-600 text-white">**PostItem >> {{ postId }}</div>
   </div>
 </template>

@@ -6,7 +6,7 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
-const { signIn,  } = useAuth()
+const { signIn } = useAuth()
 
 const currentLogin = reactive({
   email: '',

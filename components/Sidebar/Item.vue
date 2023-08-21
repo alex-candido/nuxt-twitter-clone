@@ -4,6 +4,7 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 const { data } = await useCurrentUser()
+
 const props = defineProps({
   label: {
     type: String,

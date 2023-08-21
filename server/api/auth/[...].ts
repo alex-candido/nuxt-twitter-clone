@@ -56,12 +56,12 @@ export default NuxtAuthHandler({
       },
     }),
   ],
-  // debug: process.env.NODE_ENV === 'development',
-  // session: {
-  //   strategy: 'jwt',
-  // },
-  // jwt: {
-  //   secret: process.env.NUXTAUTH_JWT_SECRET,
-  // },
-  // secret: process.env.NUXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
+  session: {
+    strategy: 'jwt',
+  },
+  jwt: {
+    secret: process.env.NUXTAUTH_JWT_SECRET,
+  },
+  secret: process.env.NUXTAUTH_SECRET,
 })

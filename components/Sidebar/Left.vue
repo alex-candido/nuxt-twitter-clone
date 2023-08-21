@@ -1,5 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+const { signOut } = useAuth()
 const items = [
   {
     icon: 'bi:house-fill',
@@ -23,14 +26,6 @@ const items = [
     size: '1.3rem',
   },
 ]
-
-const emits = defineEmits<{
-  (e: 'onLogout', value: Event): void
-}>()
-
-function onLogout(event: Event) {
-  emits('onLogout', event)
-}
 </script>
 <template>
   <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">
@@ -52,7 +47,7 @@ function onLogout(event: Event) {
           icon="bx:log-out"
           label="Logout"
           size="1.3rem"
-          @click="onLogout"
+          @click="signOut()"
         />
         <SidebarTweetButton icon="tabler:logout-2" label="Logout" />
       </div>

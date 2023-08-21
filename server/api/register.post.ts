@@ -31,8 +31,6 @@ export default defineEventHandler(async (event) => {
 
     const user = await createUser(userData)
 
-    console.log(userData)
-
     return {
       method,
       userData: user,

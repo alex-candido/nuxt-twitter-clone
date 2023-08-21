@@ -1,3 +1,7 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable import/first */
+// store.js
+import { createGlobalState, useStorage } from '@vueuse/core'
 interface ModalState {
   isOpen: boolean
 }
@@ -5,6 +9,11 @@ interface ModalState {
 const state: ModalState = reactive({
   isOpen: false,
 })
+
+export const useGlobalState = createGlobalState(() =>
+  useStorage('vueuse-local-storage', state.isOpen)
+)
+
 
 const onOpen = () => {
   state.isOpen = true

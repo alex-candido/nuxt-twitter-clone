@@ -1,14 +1,25 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable import/order -->
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useToastModal from '../../services/useToastModal';
+import useToastModal, { useGlobalState } from '../../services/useToastModal'
+
+const state = useGlobalState()
+
+onBeforeMount(() => {
+  setTimeout(() => {
+    state.value = false
+  }, 3000)
+})
 </script>
 
 <template>
   <div>
     <div
-      v-if="useToastModal.state.isOpen"
+      v-if="state"
       class="absolute top-4 left-1/2 transform -translate-x-1/2 z-50"
     >
       <div

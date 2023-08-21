@@ -1,11 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable vue/no-export-in-script-setup -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useLoginModal from '../../services/useLoginModal';
-import useRegisterModal from '../../services/useRegisterModal';
+import useLoginModal from '../../services/useLoginModal'
+import useRegisterModal from '../../services/useRegisterModal'
+import useToastModal from '../../services/useToastModal'
+
 const { signIn } = useAuth()
 
 const currentLogin = reactive({
@@ -14,6 +18,7 @@ const currentLogin = reactive({
   errorMsg: '',
   successMsg: '',
   isLoading: false,
+  toast: false,
 })
 
 const onToggle = () => {
@@ -29,12 +34,16 @@ const onSubmit = async () => {
   try {
     currentLogin.isLoading = true
 
+    useToastModal.onOpen()
+
     await signIn('credentials', {
       email: currentLogin.email,
       password: currentLogin.password,
     })
 
     currentLogin.isLoading = false
+
+    currentLogin.toast = true
 
     useLoginModal.onClose()
   } catch (error) {

@@ -20,18 +20,6 @@ const posts = [
     comments: [],
     likedIds: [],
   },
-  {
-    id: 'string',
-    user: {
-      id: 'string',
-      name: 'string',
-      username: 'string',
-    },
-    body: 'string',
-    createdAt: 'string',
-    comments: [],
-    likedIds: [],
-  },
 ]
 </script>
 <template>

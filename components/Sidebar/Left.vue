@@ -1,5 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+const { signOut } = useAuth()
+const { data } = await useCurrentUser()
+
 const items = [
   {
     icon: 'bi:house-fill',
@@ -11,26 +16,19 @@ const items = [
     icon: 'bi:bell-fill',
     label: 'Notifications',
     href: '/notifications',
-    auth: false,
-    alert: '',
+    auth: true,
+    alert: data?.currentUser.hasNotification,
     size: '1.3rem',
   },
   {
     icon: 'fa6-solid:user',
     label: 'Profile',
-    href: `/users/${'any'}`,
-    auth: false,
+    href: `/users/${data?.currentUser.id}`,
+    auth: true,
     size: '1.3rem',
   },
 ]
 
-const emits = defineEmits<{
-  (e: 'onLogout', value: Event): void
-}>()
-
-function onLogout(event: Event) {
-  emits('onLogout', event)
-}
 </script>
 <template>
   <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">
@@ -48,11 +46,11 @@ function onLogout(event: Event) {
           :size="item.size"
         />
         <SidebarItem
-          v-if="true"
+          v-if="data?.currentUser"
           icon="bx:log-out"
           label="Logout"
           size="1.3rem"
-          @click="onLogout"
+          @click="signOut()"
         />
         <SidebarTweetButton icon="tabler:logout-2" label="Logout" />
       </div>

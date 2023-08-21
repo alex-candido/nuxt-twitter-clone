@@ -6,6 +6,7 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
+const { signIn,  } = useAuth()
 
 const currentLogin = reactive({
   email: '',
@@ -28,6 +29,10 @@ const onSubmit = async () => {
   try {
     currentLogin.isLoading = true
 
+    await signIn('credentials', {
+      email: currentLogin.email,
+      password: currentLogin.password,
+    })
 
     currentLogin.isLoading = false
 

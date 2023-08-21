@@ -3,7 +3,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 const { signOut } = useAuth()
-const { data  } = await useCurrentUser()
+const { data } = await useCurrentUser()
 
 const items = [
   {
@@ -16,7 +16,7 @@ const items = [
     icon: 'bi:bell-fill',
     label: 'Notifications',
     href: '/notifications',
-    auth: false,
+    auth: true,
     alert: data?.currentUser.hasNotification,
     size: '1.3rem',
   },
@@ -24,7 +24,7 @@ const items = [
     icon: 'fa6-solid:user',
     label: 'Profile',
     href: `/users/${data?.currentUser.id}`,
-    auth: false,
+    auth: true,
     size: '1.3rem',
   },
 ]

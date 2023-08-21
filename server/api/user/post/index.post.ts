@@ -1,4 +1,4 @@
-import { createPost } from '../../db/posts'
+import { createPost } from '../../../db/posts'
 
 export default defineEventHandler(async (event) => {
   const method = event.method

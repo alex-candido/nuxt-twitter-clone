@@ -32,7 +32,7 @@ const handleSubmit = async () => {
   try {
     currentPost.isLoading = true
 
-    const url = props.isComment ? `/api/comments?postId=${props.postId}` : '/api/posts';
+    const url = props.isComment ? `/api/comments?postId=${props.postId}` : '/api/user/post';
 
     await usePosts({
       id: data?.currentUser.id,

@@ -18,7 +18,6 @@ export const useAuthStore = defineStore('auth', {
     }: RegisterPayloadInterface) {
       const { data } = await useFetch('/api/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: {
           email,
           password,
@@ -35,6 +34,17 @@ export const useAuthStore = defineStore('auth', {
       if (dataRequest) {
         console.log(dataRequest)
       }
+    },
+    async currentUser() {
+      const { data } = await useFetch('/api/current', {
+        method: 'GET',
+      })
+
+      if (!data) {
+        console.log(data)
+      }
+
+      return data.value
     },
   },
 })

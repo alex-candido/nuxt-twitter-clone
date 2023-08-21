@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { getUserByEmail } from '../../db/users'
 
-export default NuxtAuthHandler({
+const authOptions = NuxtAuthHandler({
   providers: [
     // @ts-ignore Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     CredentialsProvider.default({
@@ -65,3 +65,5 @@ export default NuxtAuthHandler({
   },
   secret: process.env.NUXTAUTH_SECRET,
 })
+
+export default authOptions

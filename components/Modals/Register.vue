@@ -6,8 +6,7 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
-import { useAuthStore } from '../../store/auth';
-const { register } = useAuthStore()
+const { signIn,  } = useAuth()
 
 const currentRegister = reactive({
   email: '',
@@ -32,7 +31,7 @@ const onSubmit = async () => {
   try {
     currentRegister.isLoading = true
 
-    await register({
+    await useRegister({
       email: currentRegister.email,
       password: currentRegister.password,
       username: currentRegister.username,
@@ -41,11 +40,9 @@ const onSubmit = async () => {
 
     currentRegister.isLoading = false
 
-    await register({
+    signIn('credentials', {
       email: currentRegister.email,
       password: currentRegister.password,
-      username: currentRegister.username,
-      name: currentRegister.name,
     })
 
     useRegisterModal.onClose()

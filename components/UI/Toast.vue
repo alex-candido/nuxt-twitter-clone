@@ -2,22 +2,22 @@
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
 import { useStorage } from '@vueuse/core';
-import useToastModal from '../../services/useToastModal';
+import useToastNotification from '../../services/useToastNotification';
 const { status } = useAuth()
 
-const state = useStorage('vue-use-local-storage', useToastModal.isLoggedin)
+const state = useStorage('vue-use-local-storage', useToastNotification.isLoggedIn)
 
 const onClick = () => {
-  useToastModal.onClose()
+  useToastNotification.onClose()
 }
 
 onBeforeMount(() => {
   if (status.value === 'unauthenticated') {
-    useToastModal.onClose()
+    useToastNotification.onClose()
   }
 
   setTimeout(() => {
-    useToastModal.onClose()
+    useToastNotification.onClose()
   }, 5000)
 })
 </script>

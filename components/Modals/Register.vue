@@ -6,7 +6,7 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
-import useToastModal from '../../services/useToastModal';
+import useToastNotification from '../../services/useToastNotification';
 const { signIn,  } = useAuth()
 
 const currentRegister = reactive({
@@ -57,7 +57,7 @@ const onSubmit = async () => {
 }
 
 const handleSubmit = () => {
-  useToastModal.onOpen('You are registered!')
+  useToastNotification.onOpen('You are registered!')
   onSubmit()
 }
 </script>

@@ -1,21 +1,23 @@
-interface ModalState {
-  isOpen: boolean
-}
+import { useStorage } from '@vueuse/core'
 
-const state: ModalState = reactive({
-  isOpen: false,
+const isLoggedin = ref({
+  isToast: false, // 登录状态
+  successMsg: '',
 })
 
-const onOpen = () => {
-  state.isOpen = true
+useStorage('vue-use-local-storage', isLoggedin.value)
+
+const onOpen = (successMsg: string) => {
+  isLoggedin.value.isToast = true
+  isLoggedin.value.successMsg = successMsg
 }
 
 const onClose = () => {
-  state.isOpen = false
+  isLoggedin.value.isToast = false
 }
 
 const useToastModal = {
-  state: readonly(state),
+  isLoggedin,
   onOpen,
   onClose,
 }

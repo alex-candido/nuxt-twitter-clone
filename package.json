@@ -13,6 +13,7 @@
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
     "@sidebase/nuxt-auth": "^0.6.0-beta.4",
     "@types/bcrypt": "^5.0.0",
     "@types/node": "^18.17.3",
@@ -28,11 +29,14 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
     "@prisma/client": "^5.1.1",
+    "@vueuse/core": "^10.3.0",
+    "@vueuse/nuxt": "^10.3.0",
     "bcrypt": "^5.1.1",
     "date-fns": "^2.30.0",
     "mongodb": "^5.7.0",
     "next-auth": "4.21.1",
     "pinia": "^2.1.6",
+    "pinia-plugin-persistedstate": "^3.2.0",
     "prisma": "^5.1.1",
     "vue3-dropzone": "^2.1.0"
   }

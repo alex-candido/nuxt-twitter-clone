@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@sidebase/nuxt-auth',
     '@nuxt/image',
+    '@vueuse/nuxt',
     [
       '@pinia/nuxt',
       {

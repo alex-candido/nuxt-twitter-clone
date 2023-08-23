@@ -18,7 +18,31 @@ export const createPost = async ({
   })
 
   if (!post) {
-    console.log('Not found user')
+    console.log('Not found post')
+  }
+  return post
+}
+
+export const getPostById = async (postId: string): Promise<any> => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    include: {
+      user: true,
+      comments: {
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
+    },
+  })
+
+  if (!post) {
+    console.log('Not found post')
   }
   return post
 }

@@ -34,11 +34,13 @@ const handleSubmit = async () => {
 
     const url = props.isComment ? `/api/comments?postId=${props.postId}` : '/api/user/post';
 
-    await usePosts({
+    await usePost({
       id: data?.currentUser.id,
       url,
       text:  currentPost.text
     })
+
+    currentPost.text = ''
 
   } catch (error) {
     if (error instanceof Error) {

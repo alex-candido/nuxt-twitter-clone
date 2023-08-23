@@ -12,7 +12,8 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
-import useToastNotification from '../../services/useToastNotification';
+import { useToastStore } from '../../store/toast';
+const { onOpen, onClose } = useToastStore()
 const { signIn, status } = useAuth()
 
 const currentLogin = reactive({
@@ -55,8 +56,8 @@ const onSubmit = async () => {
 }
 
 const handleSubmit = () => {
-  useToastNotification.onOpen('You are logged in!')
   onSubmit()
+  onOpen('You are logged in!')
 }
 
 onBeforeMount(() => {
@@ -64,7 +65,6 @@ onBeforeMount(() => {
     useLoginModal.onClose()
   }
 })
-
 </script>
 <template>
   <Modal

@@ -2,7 +2,7 @@ interface UsersPayloadInterface {
   postId?: string
 }
 
-const useGetPost = async ({ postId }: UsersPayloadInterface) => {
+const useGetPost = async (postId: UsersPayloadInterface) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
     `/api/posts/${postId}`,
     {

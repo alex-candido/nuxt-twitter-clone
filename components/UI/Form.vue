@@ -3,6 +3,7 @@
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import useGetPost from '../../composables/useGetPost';
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
 const { data } = await useCurrentUser()
@@ -21,6 +22,8 @@ const props = defineProps({
     default: '',
   },
 })
+
+const { execute: mutateGetPost } = await useGetPost({postId: props.postId});
 
 const currentPost = reactive({
   text: '',
@@ -41,7 +44,7 @@ const handleSubmit = async () => {
     })
 
     currentPost.text = ''
-
+    mutateGetPost();
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message

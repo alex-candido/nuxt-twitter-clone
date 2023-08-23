@@ -1,12 +1,18 @@
 interface UsersPayloadInterface {
-  postId?: string
+  id?: string
+  url: string
+  text: string
 }
 
-const useGetPost = async (postId: UsersPayloadInterface) => {
+const useSetPost = async ({ url, text, id }: UsersPayloadInterface) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
-    `/api/posts/${postId}`,
+    url,
     {
-      method: 'GET',
+      method: 'POST',
+      body: {
+        id,
+        text,
+      },
     },
   )
 
@@ -22,4 +28,4 @@ const useGetPost = async (postId: UsersPayloadInterface) => {
   }
 }
 
-export default useGetPost
+export default useSetPost

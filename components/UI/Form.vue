@@ -3,7 +3,9 @@
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useGetPost from '../../composables/useGetPost';
+import usePost from '../../composables/usePost';
+import usePosts from '../../composables/usePosts';
+import useSetPost from '../../composables/useSetPost';
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
 const { data } = await useCurrentUser()
@@ -23,7 +25,8 @@ const props = defineProps({
   },
 })
 
-const { execute: mutateGetPost } = await useGetPost({postId: props.postId});
+const { execute: mutatePosts } = await usePosts();
+const { execute: mutatePost } = await usePost({postId: props.postId});
 
 const currentPost = reactive({
   text: '',
@@ -35,16 +38,17 @@ const handleSubmit = async () => {
   try {
     currentPost.isLoading = true
 
-    const url = props.isComment ? `/api/comments?postId=${props.postId}` : '/api/user/post';
+    const url = props.isComment ? `/api/comments?postId=${props.postId}` : '/api/posts';
 
-    await usePost({
+    await useSetPost({
       id: data?.currentUser.id,
       url,
       text:  currentPost.text
     })
 
     currentPost.text = ''
-    mutateGetPost();
+    mutatePosts();
+    mutatePost();
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message

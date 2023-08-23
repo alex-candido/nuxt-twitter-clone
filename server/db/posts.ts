@@ -6,14 +6,11 @@ export interface PostDataProps {
   text: string
 }
 
-export const createPost = async ({
-  text,
-  id,
-}: PostDataProps): Promise<Post> => {
+export const createPost = async (postData: PostDataProps): Promise<Post> => {
   const post = await prisma.post.create({
     data: {
-      body: text,
-      userId: id,
+      body: postData.text,
+      userId: postData.id,
     },
   })
 
@@ -45,4 +42,41 @@ export const getPostById = async (postId: string): Promise<any> => {
     console.log('Not found post')
   }
   return post
+}
+
+export const getPostsByUserId = async (userId: string): Promise<any> => {
+  const posts = await prisma.post.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      user: true,
+      comments: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+  if (!posts) {
+    console.log('Not found posts')
+  }
+  return posts
+}
+
+export const getAllPosts = async (): Promise<any> => {
+  const posts = await prisma.post.findMany({
+    include: {
+      user: true,
+      comments: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+  if (!posts) {
+    console.log('Not found posts')
+  }
+  return posts
 }

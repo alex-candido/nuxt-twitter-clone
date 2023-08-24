@@ -38,3 +38,16 @@ export const getUserByEmail = async (email: string): Promise<User> => {
 
   return user
 }
+
+export const getUserById = async (postId: string): Promise<any> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: postId,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found user')
+  }
+  return user
+}

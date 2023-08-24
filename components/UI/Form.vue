@@ -1,13 +1,19 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable import/order -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import usePost from '../../composables/usePost';
-import usePosts from '../../composables/usePosts';
-import useSetPost from '../../composables/useSetPost';
-import useLoginModal from '../../services/useLoginModal';
-import useRegisterModal from '../../services/useRegisterModal';
+// @ts-ignore
+import useCurrentUser from '@/composables/useCurrentUser';
+import usePost from '@/composables/usePost';
+import usePosts from '@/composables/usePosts';
+import useSetPost from '@/composables/useSetPost';
+  // @ts-ignore
+import useLoginModal from '@/services/useLoginModal';
+  // @ts-ignore
+import useRegisterModal from '@/services/useRegisterModal';
 const { data } = await useCurrentUser()
 
 const props = defineProps({
@@ -64,7 +70,7 @@ const handleSubmit = async () => {
     <template v-if="data?.currentUser">
       <div class="flex flex-row gap-4">
         <div>
-          <UIAvatar :user-id="'xfbbbedbedbberbrebre'" />
+          <UIAvatar :user-id="data?.currentUser.id" />
         </div>
         <div class="w-full">
           <textarea

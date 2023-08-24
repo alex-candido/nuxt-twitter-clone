@@ -1,4 +1,4 @@
-import { createPost, getAllPosts, getPostsByUserId } from '../../db/posts'
+import { createPost, getAllPosts } from '../../db/posts'
 
 export default defineEventHandler(async (event) => {
   const method = event.method
@@ -30,18 +30,9 @@ export default defineEventHandler(async (event) => {
     }
 
     if (method === 'GET') {
-      const { userId } = getQuery(event)
-      let currentPosts
+      const currentPosts = await getAllPosts()
 
-      if (userId && typeof userId === 'string') {
-        currentPosts = await getPostsByUserId(userId)
-      } else {
-        currentPosts = await getAllPosts()
-      }
-
-      return {
-        currentPosts,
-      }
+      return currentPosts
     }
   } catch (error) {
     return sendError(

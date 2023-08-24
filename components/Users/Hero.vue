@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-defineProps({
+const props = defineProps({
   userId: {
     type: String,
     required: true,
@@ -9,6 +9,8 @@ defineProps({
 const fetchedUser = {
   coverImage: '',
 }
+
+console.log(props.userId)
 </script>
 <template>
   <div>

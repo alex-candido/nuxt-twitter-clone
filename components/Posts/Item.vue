@@ -1,26 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-interface PostItemProps {
-  data: {
-    id: string
-    user: {
-      id: string
-      name: string
-      username: string
-    }
-    body: string
-    createdAt?: string
-    comments?: any[]
-    likedIds?: any[]
-  }
-  userId?: string
-}
+import { formatDistanceToNowStrict } from 'date-fns';
+import useLoginModal from '../../services/useLoginModal';
+
 const props = defineProps({
   data: {
-    type: Object as () => PostItemProps['data'],
-    default: () => ({}),
+    type: Object,
+    required: true
   },
   userId: {
     type: String,
@@ -29,10 +19,13 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const { data: currentUser } = await useCurrentUser()
+//  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId});
+const hasLiked = true
 
 const goToUser = (event: any) => {
   event.stopPropagation()
-  router.push(`/users/${props.data.user.id}`)
+  router.push(`/users/${props.data.id}`)
 }
 
 const goToPost = (event: any) => {
@@ -43,19 +36,23 @@ const goToPost = (event: any) => {
 const onLike = async (event: any) => {
   event.stopPropagation()
 
-  // if (!currentUser) {
-  //   return loginModal.onOpen()
-  // }
+  if (!currentUser) {
+    return useLoginModal.onOpen()
+  }
 
   // toggleLike()
 }
 
-const LikeIcon = computed(() => ({}))
+const LikeIcon = computed(() => {
+  return hasLiked ? 'bi:heart-fill' : 'bi:heart'
+})
 
 const createdAt = computed(() => {
   if (!props.data?.createdAt) {
     return null
   }
+
+  return formatDistanceToNowStrict(new Date(props.data.createdAt));
 })
 </script>
 <template>
@@ -64,7 +61,7 @@ const createdAt = computed(() => {
     @click="goToPost"
   >
     <div class="flex flex-row items-start gap-3">
-      <Avatar :user-id="data.user.id" />
+      <UIAvatar :user-id="data.user.id" />
       <div>
         <div class="flex flex-row items-center gap-2">
           <p
@@ -86,14 +83,18 @@ const createdAt = computed(() => {
           <div
             class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500"
           >
-            <AiOutlineMessage size="20" />
+            <Icon name="ant-design:message-outlined" size="1.5rem" />
             <p>{{ data.comments?.length || 0 }}</p>
           </div>
           <div
             class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500"
             @click="onLike"
           >
-            <LikeIcon :color="'true' ? 'red' : ''" size="20" />
+            <Icon
+              :name="LikeIcon"
+              size="1.3rem"
+              :color="{ red: hasLiked, '': !hasLiked }"
+            />
             <p>{{ data.likedIds?.length || 0 }}</p>
           </div>
         </div>

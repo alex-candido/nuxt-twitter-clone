@@ -37,6 +37,7 @@ const onClick = (event: any) => {
       'transition',
       'cursor-pointer',
       'relative',
+      'flex-none',
     ]"
   >
     <nuxt-img

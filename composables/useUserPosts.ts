@@ -1,6 +1,10 @@
-const usePosts = async () => {
+interface UsePostsPayloadInterface {
+  userId?: string
+}
+
+const useUserPosts = async (userId?: UsePostsPayloadInterface) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
-    '/api/posts',
+    `api/posts/user?userId=${userId}`,
     { method: 'GET' },
   )
 
@@ -16,4 +20,4 @@ const usePosts = async () => {
   }
 }
 
-export default usePosts
+export default useUserPosts

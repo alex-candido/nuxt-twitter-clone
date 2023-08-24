@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-const { data, status } = useAuth()
+// const { data, status } = useAuth()
+
+const { data: posts, execute: mutatePost } = await usePosts()
+
+onBeforeMount(() => {
+  mutatePost()
+})
 </script>
 <template>
   <div>
     <UIHeader label="Home" />
     <UIForm placeholder="What's happening" />
-    <PostsFeed />
-    <div class="bg-dim-600 text-white text-2xl">{{ data?.user }}</div>
-    <div class="bg-dim-600 text-white text-2xl">{{ status }}</div>
+    <PostsFeed :posts="posts" />
   </div>
 </template>

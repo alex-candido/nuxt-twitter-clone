@@ -6,21 +6,20 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 // @ts-ignore
-import useCurrentUser from '@/composables/useCurrentUser';
+import useCurrentUser from '@/composables/useCurrentUser'
 // @ts-ignore
-import usePost from '@/composables/usePost';
+import usePost from '@/composables/usePost'
 // @ts-ignore
-import usePosts from '@/composables/usePosts';
+import usePosts from '@/composables/usePosts'
 // @ts-ignore
-import useSetPost from '@/composables/useSetPost';
-  // @ts-ignore
-import useLoginModal from '@/services/useLoginModal';
-  // @ts-ignore
-import useRegisterModal from '@/services/useRegisterModal';
-import { useToastStore } from '../../store/toast';
+import useSetPost from '@/composables/useSetPost'
+// @ts-ignore
+import useLoginModal from '@/services/useLoginModal'
+// @ts-ignore
+import useRegisterModal from '@/services/useRegisterModal'
+import { useToastStore } from '../../store/toast'
 const { onOpen } = useToastStore()
 const { data } = await useCurrentUser()
-
 
 const props = defineProps({
   placeholder: {
@@ -37,8 +36,8 @@ const props = defineProps({
   },
 })
 
-const { refresh: mutatePosts,  } = await usePosts();
-const { refresh: mutatePost, } = await usePost(props.postId);
+const { refresh: mutatePosts } = await usePosts()
+const { refresh: mutatePost } = await usePost(props.postId)
 
 const currentPost = reactive({
   text: '',
@@ -50,18 +49,20 @@ const onSubmit = async () => {
   try {
     currentPost.isLoading = true
 
-    const url = props.isComment ? `/api/comments?postId=${props.postId}` : '/api/posts';
+    const url = props.isComment
+      ? `/api/comments?postId=${props.postId}`
+      : '/api/posts'
 
     await useSetPost({
       id: data?.currentUser.id,
       url,
-      text:  currentPost.text
+      text: currentPost.text,
     })
 
     currentPost.text = ''
-    mutatePosts();
-    mutatePost();
-    location.reload();
+    mutatePosts()
+    mutatePost()
+    location.reload()
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message
@@ -70,6 +71,8 @@ const onSubmit = async () => {
     currentPost.isLoading = false
   }
 }
+
+console.log(props.postId)
 
 const handleSubmit = () => {
   onSubmit()

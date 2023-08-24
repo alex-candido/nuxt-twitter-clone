@@ -8,8 +8,6 @@ const useUser = async (userId: UseUserPayloadInterface) => {
     { method: 'GET' },
   )
 
-  console.log(data.value)
-
   return {
     data: data.value,
     error,

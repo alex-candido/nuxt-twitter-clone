@@ -8,8 +8,6 @@ const useUserPosts = async (userId?: UsePostsPayloadInterface) => {
     { method: 'GET' },
   )
 
-  console.log(data.value)
-
   return {
     data: data.value,
     error,

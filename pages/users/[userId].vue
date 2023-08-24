@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 const router = useRoute()
 const userId = router.params.userId as string
-
-console.log(userId)
 </script>
 <template>
   <div>

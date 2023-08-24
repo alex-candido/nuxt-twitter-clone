@@ -6,8 +6,6 @@ const usePost = async (postId: string) => {
     },
   )
 
-  console.log(data.value)
-
   return {
     data: data.value,
     error,

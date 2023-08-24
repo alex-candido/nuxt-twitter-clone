@@ -7,14 +7,20 @@
 <script lang="ts" setup>
 // @ts-ignore
 import useCurrentUser from '@/composables/useCurrentUser';
+// @ts-ignore
 import usePost from '@/composables/usePost';
+// @ts-ignore
 import usePosts from '@/composables/usePosts';
+// @ts-ignore
 import useSetPost from '@/composables/useSetPost';
   // @ts-ignore
 import useLoginModal from '@/services/useLoginModal';
   // @ts-ignore
 import useRegisterModal from '@/services/useRegisterModal';
+import { useToastStore } from '../../store/toast';
+const { onOpen } = useToastStore()
 const { data } = await useCurrentUser()
+
 
 const props = defineProps({
   placeholder: {
@@ -31,8 +37,8 @@ const props = defineProps({
   },
 })
 
-const { execute: mutatePosts } = await usePosts();
-const { execute: mutatePost } = await usePost({postId: props.postId});
+const { refresh: mutatePosts,  } = await usePosts();
+const { refresh: mutatePost, } = await usePost(props.postId);
 
 const currentPost = reactive({
   text: '',
@@ -40,7 +46,7 @@ const currentPost = reactive({
   errorMsg: '',
 })
 
-const handleSubmit = async () => {
+const onSubmit = async () => {
   try {
     currentPost.isLoading = true
 
@@ -55,6 +61,7 @@ const handleSubmit = async () => {
     currentPost.text = ''
     mutatePosts();
     mutatePost();
+    location.reload();
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message
@@ -62,6 +69,11 @@ const handleSubmit = async () => {
   } finally {
     currentPost.isLoading = false
   }
+}
+
+const handleSubmit = () => {
+  onSubmit()
+  onOpen('Tweet Created!')
 }
 </script>
 

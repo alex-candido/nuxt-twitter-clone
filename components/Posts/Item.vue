@@ -78,6 +78,12 @@ const createdAt = computed(() => {
           </span>
           <span class="text-neutral-500 text-sm">{{ createdAt }}</span>
         </div>
+        <!-- <div class="flex my-5 mr-2 border-1 rounded-2xl">
+          <img
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            class="w-full rounded-2xl"
+          />
+        </div> -->
         <div class="text-white mt-1">{{ data.body }}</div>
         <div class="flex flex-row items-center mt-3 gap-10">
           <div

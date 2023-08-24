@@ -22,9 +22,7 @@ export default defineEventHandler(async (event) => {
 
     const currentPost = await getPostById(postId)
 
-    return {
-      currentPost,
-    }
+    return currentPost
   } catch (error) {
     return sendError(
       event,

@@ -1,4 +1,8 @@
-import { getUserById } from '../../db/users'
+/* eslint-disable prettier/prettier */
+/* eslint-disable object-shorthand */
+/* eslint-disable require-await */
+
+import { getAllUsers } from '../../db/users'
 
 export default defineEventHandler(async (event) => {
   const method = event.method
@@ -11,20 +15,10 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const userId = getRouterParam(event, 'userId')
 
-    if (!userId) {
-      return sendError(
-        event,
-        createError({ statusCode: 400, statusMessage: 'Invalid ID' }),
-      )
-    }
+    const currentUsers = await getAllUsers()
 
-    const currentUser = await getUserById(userId)
-
-    return {
-      currentUser,
-    }
+    return currentUsers
   } catch (error) {
     return sendError(
       event,

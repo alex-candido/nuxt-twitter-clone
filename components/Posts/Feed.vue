@@ -2,7 +2,7 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import usePosts from '../../composables/usePosts';
+import usePosts from '@/composables/usePosts';
 const props = defineProps({
   userId: {
     type: String,

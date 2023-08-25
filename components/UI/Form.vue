@@ -5,19 +5,13 @@
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-// @ts-ignore
 import useCurrentUser from '@/composables/useCurrentUser'
-// @ts-ignore
 import usePost from '@/composables/usePost'
-// @ts-ignore
 import usePosts from '@/composables/usePosts'
-// @ts-ignore
 import useSetPost from '@/composables/useSetPost'
-// @ts-ignore
 import useLoginModal from '@/services/useLoginModal'
-// @ts-ignore
 import useRegisterModal from '@/services/useRegisterModal'
-import { useToastStore } from '../../store/toast'
+import { useToastStore } from '@/store/toast'
 const { onOpen } = useToastStore()
 const { data } = await useCurrentUser()
 
@@ -72,11 +66,13 @@ const onSubmit = async () => {
   }
 }
 
-console.log(props.postId)
-
 const handleSubmit = () => {
   onSubmit()
-  onOpen('Tweet Created!')
+  if (props.isComment) {
+    onOpen('Comment Created!')
+  } else {
+    onOpen('Tweet Created!')
+  }
 }
 </script>
 

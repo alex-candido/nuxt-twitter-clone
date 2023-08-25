@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useUsers from '../../composables/useUsers'
+import useUsers from '@/composables/useUsers';
 
 const { data: users } = await useUsers()
 </script>

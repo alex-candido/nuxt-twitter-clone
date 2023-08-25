@@ -1,7 +1,7 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import loginModal from '../../services/useLoginModal';
+import loginModal from '@/services/useLoginModal';
 
 const onClick = () => {
   loginModal.onOpen()

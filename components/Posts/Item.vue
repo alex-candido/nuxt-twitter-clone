@@ -1,11 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable import/order -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import useLoginModal from '@/services/useLoginModal';
 import { formatDistanceToNowStrict } from 'date-fns';
-import useLoginModal from '../../services/useLoginModal';
 
 const props = defineProps({
   data: {

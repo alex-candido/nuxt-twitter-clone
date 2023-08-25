@@ -21,7 +21,7 @@ const createdAt = formatDistanceToNowStrict(new Date(props.data.createdAt))
 </script>
 <template>
   <div
-    class="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition"
+    class="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-slate-300 hover:bg-opacity-10 transition"
     @click="goToUser"
   >
     <div class="flex flex-row items-start gap-3">

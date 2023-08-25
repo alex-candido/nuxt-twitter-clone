@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import usePost from '@/composables/usePost'
+import usePost from '@/composables/usePost';
 
 const router = useRouter()
 const { postId } = router.currentRoute.value.params
@@ -23,7 +23,7 @@ const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
       <PostsItem v-if="postId" :data="fetchedPost as Record<string, any>" />
       <UIForm
         :post-id="currentPostid"
-        is-comment
+        :is-comment="true"
         placeholder="Tweet your reply"
       />
       <PostsCommentFeed v-if="fetchedPost" :comments="fetchedPost?.comments" />

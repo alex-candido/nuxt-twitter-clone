@@ -10,9 +10,7 @@ export default defineEventHandler(async (event) => {
     )
   }
 
-  const body = await readBody(event)
-
-  const { email, name, username, password } = body
+  const { email, name, username, password } = await readBody(event)
 
   if (!email || !name || !username || !password) {
     return sendError(

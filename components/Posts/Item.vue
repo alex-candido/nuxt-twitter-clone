@@ -6,8 +6,9 @@
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useLoginModal from '@/services/useLoginModal';
 import { formatDistanceToNowStrict } from 'date-fns';
+import useLike from '../../composables/useLike';
+import useLoginModal from '../../services/useLoginModal';
 
 const props = defineProps({
   data: {
@@ -21,9 +22,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { data: currentUser } = await useCurrentUser()
- await useLike({postId: props.data.id, userId: props.userId });
-const hasLiked = true
+const { data: currentUser } = useCurrentUser()
+const { hasLiked, toggleLike } = useLike({ postId: props.data.id, userId: props.userId});
 
 const goToUser = (event: any) => {
   event.stopPropagation()
@@ -37,12 +37,13 @@ const goToPost = (event: any) => {
 
 const onLike = async (event: any) => {
   event.stopPropagation()
+  console.log('like')
 
   if (!currentUser) {
     return useLoginModal.onOpen()
   }
 
-  // toggleLike()
+  toggleLike()
 }
 
 const LikeIcon = computed(() => {
@@ -63,7 +64,7 @@ const createdAt = computed(() => {
     @click="goToPost"
   >
     <div class="flex flex-row items-start gap-3">
-      <UIAvatar :user-id="data.user.id" />
+      <UIAvatar :user-id="data.user.id || ''" />
       <div>
         <div class="flex flex-row items-center gap-2">
           <p

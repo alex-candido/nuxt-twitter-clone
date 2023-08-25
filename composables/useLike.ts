@@ -1,22 +1,13 @@
-import useLoginModal from '../services/useLoginModal'
-import useSetLike from './useSetLike'
+/* eslint-disable prettier/prettier */
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-interface LikePayloadInterface {
-  postId: string
-  userId: string
-}
+import useCurrentUser from './useCurrentUser';
+import usePost from './usePost';
+import useUserPosts from './useUserPosts';
 
-const useLike = async ({
-  postId,
-  userId,
-}: {
-  postId: string
-  userId: string
-}) => {
-  const { data: currentUser } = await useCurrentUser()
-  const { data: fetchedPost, execute: mutatePost } = await usePost(postId)
-  const { execute: mutatePosts } = await useUserPosts(userId)
+const useLike = ({ postId, userId }: { postId: string; userId: string }) => {
+  const { data: currentUser } = useCurrentUser()
+  const { data: fetchedPost, execute: mutatePost } = usePost(postId)
+  const { execute: mutateUserPosts } = useUserPosts(userId)
 
   const hasLiked = computed(() => {
     const list = fetchedPost?.likedIds || []
@@ -26,29 +17,27 @@ const useLike = async ({
 
   const toggleLike = async () => {
     if (!currentUser?.currentUser) {
-      return useLoginModal.onOpen()
+      // return useLoginModal.onOpen()
     }
 
     try {
       if (hasLiked.value) {
-        await useSetLike({ postId, method: 'DELETE' })
+        await useFetch(`/api/like`,{ method: 'DELETE', body: postId || ""  })
       } else {
-        await useSetLike({ postId, method: 'POST' })
+        await useFetch(`/api/like`,{ method: 'POST', body: postId || ""})
       }
 
-      await mutatePost()
-      await mutatePosts()
-
-      return {}
+      mutatePost()
+      mutateUserPosts()
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error.message)
+        return error.message
       }
     }
   }
 
   return {
-    hasLiked,
+    hasLiked: hasLiked.value,
     toggleLike,
   }
 }

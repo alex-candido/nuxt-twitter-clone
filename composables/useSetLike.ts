@@ -1,5 +1,5 @@
 /* eslint-disable object-shorthand */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface SetLikePayloadInterface {
   postId: string
   method: any
@@ -8,7 +8,7 @@ interface SetLikePayloadInterface {
 const useSetLike = async ({ postId, method }: SetLikePayloadInterface) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
     `/api/like`,
-    { method: method },
+    { method: method, body: postId },
   )
 
   return {

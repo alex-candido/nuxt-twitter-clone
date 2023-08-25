@@ -13,13 +13,6 @@ export default defineEventHandler(async (event) => {
   try {
     const { userId } = getQuery(event)
 
-    if (!userId) {
-      return sendError(
-        event,
-        createError({ statusCode: 400, statusMessage: 'Invalid ID' }),
-      )
-    }
-
     let currentPosts
 
     if (userId && typeof userId === 'string') {

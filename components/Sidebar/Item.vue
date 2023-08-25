@@ -2,7 +2,7 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useLoginModal from '@/services/useLoginModal';
+import useLoginModal from '../../services/useLoginModal';
 const { data } = await useCurrentUser()
 
 const props = defineProps({

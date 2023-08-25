@@ -1,5 +1,5 @@
-const useCurrentUser = async () => {
-  const { data, error, execute, pending, refresh, status } = await useFetch(
+const useCurrentUser = () => {
+  const { data, error, execute, pending, refresh, status } = useFetch(
     '/api/current',
     {
       method: 'GET',

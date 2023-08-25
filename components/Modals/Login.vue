@@ -10,9 +10,9 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useLoginModal from '@/services/useLoginModal';
-import useRegisterModal from '@/services/useRegisterModal';
-import { useToastStore } from '@/store/toast';
+import useLoginModal from '../../services/useLoginModal';
+import useRegisterModal from '../../services/useRegisterModal';
+import { useToastStore } from '../../store/toast';
 const { onOpen } = useToastStore()
 const { signIn, status } = useAuth()
 

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import { useToastStore } from '@/store/toast';
+import { useToastStore } from '../../store/toast';
 const { onClose, isToast } = useToastStore()
 const { status } = useAuth()
 

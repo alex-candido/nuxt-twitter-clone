@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import usePost from '@/composables/usePost';
+import usePost from '../../composables/usePost';
 
 const router = useRouter()
 const { postId } = router.currentRoute.value.params

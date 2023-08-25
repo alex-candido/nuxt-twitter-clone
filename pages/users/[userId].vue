@@ -11,7 +11,7 @@ const userId = router.params.userId as string
       <UIHeader :show-back-arrow="true" :label="'UserName'" />
       <UsersHero :user-id="userId" />
       <UsersBio :user-id="userId" />
-      <!-- <PostsFeed :user-id="userId" /> -->
+      <PostsFeed :user-id="userId" />
     </div>
   </div>
 </template>

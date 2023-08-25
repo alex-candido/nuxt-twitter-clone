@@ -22,7 +22,7 @@ const props = defineProps({
 
 const router = useRouter()
 const { data: currentUser } = await useCurrentUser()
-//  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId});
+ await useLike({postId: props.data.id, userId: props.userId });
 const hasLiked = true
 
 const goToUser = (event: any) => {

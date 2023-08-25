@@ -30,8 +30,8 @@ const props = defineProps({
   },
 })
 
-const { refresh: mutatePosts } = await usePosts()
-const { refresh: mutatePost } = await usePost(props.postId)
+const { execute: mutatePosts } = await usePosts()
+const { execute: mutatePost } = await usePost(props.postId)
 
 const currentPost = reactive({
   text: '',
@@ -54,8 +54,8 @@ const onSubmit = async () => {
     })
 
     currentPost.text = ''
-    mutatePosts()
-    mutatePost()
+    await mutatePosts()
+    await mutatePost()
     location.reload()
   } catch (error) {
     if (error instanceof Error) {

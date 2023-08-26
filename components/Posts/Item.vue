@@ -45,10 +45,6 @@ const onLike = async (event: any) => {
   toggleLike()
 }
 
-const LikeIcon = computed(() => {
-  return hasLiked ? 'bi:heart-fill' : 'bi:heart'
-})
-
 const createdAt = computed(() => {
   if (!props.data?.createdAt) {
     return null
@@ -56,6 +52,7 @@ const createdAt = computed(() => {
 
   return formatDistanceToNowStrict(new Date(props.data.createdAt));
 })
+
 </script>
 <template>
   <div
@@ -99,9 +96,17 @@ const createdAt = computed(() => {
             @click="onLike"
           >
             <Icon
-              :name="LikeIcon"
+              :name="
+                computed(() => {
+                  return hasLiked ? 'bi:heart-fill' : 'bi:heart'
+                }).value
+              "
               size="1.3rem"
-              :color="{ red: hasLiked, '': !hasLiked }"
+              :color="
+                computed(() => {
+                  return hasLiked ? 'red' : ''
+                }).value
+              "
             />
             <p>{{ data.likedIds?.length || 0 }}</p>
           </div>

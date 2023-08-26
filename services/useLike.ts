@@ -22,9 +22,9 @@ const useLike = ({ postId, userId }: { postId: string; userId: string }) => {
 
     try {
       if (hasLiked.value) {
-        await useFetch(`/api/like`, { method: 'DELETE', body: { postId } })
+        await useFetch(`/api/like`, { method: 'DELETE', body: { postId, isCurrentUser } })
       } else {
-        await useFetch(`/api/like`,{ method: 'POST', body: { postId }})
+        await useFetch(`/api/like`,{ method: 'POST', body: { postId, isCurrentUser }})
       }
     } catch (error) {
       if (error instanceof Error) {

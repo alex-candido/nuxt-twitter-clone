@@ -12,9 +12,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     if (method === 'POST') {
-      const body = await readBody(event)
-
-      const { id, text } = body
+      const { id, text } = await readBody(event)
 
       const postData = {
         id,

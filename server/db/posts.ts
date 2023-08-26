@@ -6,6 +6,11 @@ export interface PostDataProps {
   text: string
 }
 
+export interface UpdatedPostProps {
+  postId: string
+  updatedLikedIds: string[]
+}
+
 export const createPost = async (postData: PostDataProps): Promise<Post> => {
   const post = await prisma.post.create({
     data: {
@@ -79,4 +84,20 @@ export const getAllPosts = async (): Promise<any> => {
     console.log('Not found posts')
   }
   return posts
+}
+
+export const updatedPost = async (postData: UpdatedPostProps): Promise<any> => {
+  const post = await prisma.post.update({
+    where: {
+      id: postData.postId,
+    },
+    data: {
+      likedIds: postData.updatedLikedIds,
+    },
+  })
+
+  if (!post) {
+    console.log('Not found post')
+  }
+  return post
 }

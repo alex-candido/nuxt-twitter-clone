@@ -1,5 +1,5 @@
-const useUserPosts = (userId?: string) => {
-  const { data, error, execute, pending, refresh, status } = useFetch(
+const useUserPosts = async (userId?: string) => {
+  const { data, error, execute, pending, refresh, status } = await useFetch(
     `/api/posts/user?userId=${userId}`,
     { method: 'GET' },
   )

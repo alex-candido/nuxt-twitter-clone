@@ -3,7 +3,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
-const { data } = await useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
 
 const props = defineProps({
   label: {
@@ -39,7 +39,7 @@ const handleClick = () => {
     return props.onClick()
   }
 
-  if (props.auth && !data?.currentUser) {
+  if (props.auth && !currentUser) {
     useLoginModal.onOpen()
   } else if (props.href) {
     router.push(props.href)

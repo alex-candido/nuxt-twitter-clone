@@ -43,7 +43,6 @@ const handleSubmit = () => {
   if (props.disabled) {
     return
   }
-
   props.onSubmit()
 }
 </script>

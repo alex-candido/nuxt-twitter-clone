@@ -10,5 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const { postId } = await readBody(event)
 
-  return postId
+  console.log({ postId, method })
+
+  return { method, postId }
 })

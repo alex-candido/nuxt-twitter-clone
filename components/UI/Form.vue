@@ -13,7 +13,7 @@ import useLoginModal from '../../services/useLoginModal'
 import useRegisterModal from '../../services/useRegisterModal'
 import { useToastStore } from '../../store/toast'
 const { onOpen } = useToastStore()
-const { data } = await useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
 
 const props = defineProps({
   placeholder: {
@@ -48,7 +48,7 @@ const onSubmit = async () => {
       : '/api/posts'
 
     await useSetPost({
-      id: data?.currentUser.id,
+      id: currentUser?.id,
       url,
       text: currentPost.text,
     })
@@ -78,9 +78,9 @@ const handleSubmit = () => {
 
 <template>
   <div class="border-b-[1px] border-neutral-600 px-5 py-2">
-    <div v-show="data?.currentUser.id" class="flex flex-row gap-4">
+    <div v-show="currentUser?.id" class="flex flex-row gap-4">
       <div>
-        <UIAvatar :user-id="data?.currentUser.id || ''" />
+        <UIAvatar :user-id="currentUser?.id || ''" />
       </div>
       <div class="w-full">
         <textarea
@@ -101,7 +101,7 @@ const handleSubmit = () => {
         </div>
       </div>
     </div>
-    <div v-show="!data?.currentUser.id" class="py-8">
+    <div v-show="!currentUser?.id" class="py-8">
       <h1 class="text-white text-2xl text-center mb-4 font-bold">
         Welcome to Twitter
       </h1>

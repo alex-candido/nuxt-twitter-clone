@@ -4,10 +4,10 @@ import usePost from '../../composables/usePost';
 
 const router = useRouter()
 const { postId } = router.currentRoute.value.params
-
 const currentPostid = postId as string
 
 const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
+
 </script>
 <template>
   <div>

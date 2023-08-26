@@ -7,7 +7,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { formatDistanceToNowStrict } from 'date-fns';
-import useLike from '../../composables/useLike';
+import useLike from '../../services/useLike';
 import useLoginModal from '../../services/useLoginModal';
 
 const props = defineProps({
@@ -22,8 +22,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { data: currentUser } = useCurrentUser()
-const { hasLiked, toggleLike } = useLike({ postId: props.data.id, userId: props.userId});
+const { data: currentUser } = await useCurrentUser()
+const { hasLiked, toggleLike } = await useLike({ postId: props.data.id, userId: props.userId});
 
 const goToUser = (event: any) => {
   event.stopPropagation()
@@ -37,7 +37,6 @@ const goToPost = (event: any) => {
 
 const onLike = async (event: any) => {
   event.stopPropagation()
-  console.log('like')
 
   if (!currentUser) {
     return useLoginModal.onOpen()

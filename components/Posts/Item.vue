@@ -12,7 +12,6 @@ import { formatDistanceToNowStrict } from 'date-fns'
 import { storeToRefs } from 'pinia'
 import useSetLike from '../../composables/useSetLike'
 import useLoginModal from '../../services/useLoginModal'
-import { usePostStore } from '../../store/post'
 import { usePostsStore } from '../../store/posts'
 import { useUserStore } from '../../store/user'
 
@@ -33,7 +32,6 @@ const props = defineProps({
 
 const router = useRouter()
 const { setCurrentPosts, setCurrentPost } = usePostsStore()
-// const { setCurrentPost } = usePostStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 

@@ -35,9 +35,8 @@ const props = defineProps({
   },
 })
 
-const { setCurrentPosts } = usePostsStore()
-const { execute: mutatePosts } = await usePosts()
-const { execute: mutatePost } = await usePost(props.postId)
+const { setCurrentPosts, setCurrentPost } = usePostsStore()
+await setCurrentPost(props.postId)
 
 const currentPost = reactive({
   text: '',
@@ -61,12 +60,11 @@ const onSubmit = async () => {
 
     currentPost.text = ''
     await setCurrentPosts()
-    await mutatePosts()
-    await mutatePost()
+    await setCurrentPost(props.postId)
 
-    if (props.details) {
-      location.reload()
-    }
+    // if (props.details) {
+    //   location.reload()
+    // }
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message

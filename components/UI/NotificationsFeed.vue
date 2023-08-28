@@ -1,5 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '../../store/user'
+
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+
 const fetchedNotifications = [
   {
     id: 'aflhegvabv865bfb',
@@ -8,6 +13,8 @@ const fetchedNotifications = [
     createdAt: '',
   },
 ]
+
+console.log(isCurrentUser.value)
 </script>
 
 <template>

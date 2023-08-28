@@ -21,3 +21,22 @@ export const createNotification = async (
 
   return notification
 }
+
+export const getNotificationsByUserId = async (
+  userId: string,
+): Promise<any> => {
+  const notifications = await prisma.notification.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+  if (!notifications) {
+    throw new Error('Not found user')
+  }
+
+  return notifications
+}

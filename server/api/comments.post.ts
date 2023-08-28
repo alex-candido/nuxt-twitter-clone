@@ -1,5 +1,5 @@
 import { createComment } from '../db/comments'
-import { createNotification } from '../db/notification'
+import { createNotification } from '../db/notifications'
 import { getPostById } from '../db/posts'
 import { updateIsNotificationUser } from '../db/users'
 

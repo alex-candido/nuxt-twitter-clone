@@ -32,9 +32,12 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { setCurrentPosts } = usePostsStore()
-const { setCurrentPost } = usePostStore()
+const { setCurrentPosts, setCurrentPost } = usePostsStore()
+// const { setCurrentPost } = usePostStore()
+const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+
+console.log(currentPost.value)
 
 const likePost = async () => {
   await useSetLike({
@@ -43,6 +46,7 @@ const likePost = async () => {
     currentUser: isCurrentUser.value,
   })
   await setCurrentPosts()
+  await setCurrentPost(props.data.id)
 }
 
 const unlikePost = async () => {
@@ -52,10 +56,14 @@ const unlikePost = async () => {
     currentUser: isCurrentUser.value,
   })
   await setCurrentPosts()
+  await setCurrentPost(props.data.id)
 }
 
 const hasLiked = computed(() => {
-  const list = props.data.likedIds || []
+  const list = props.details
+    ? currentPost.value?.likedIds || []
+    : props.data.likedIds
+
   if (isCurrentUser.value?.id) {
     return list.includes(isCurrentUser.value?.id)
   }
@@ -94,9 +102,9 @@ const onLike = async (event: Event) => {
 
   await toggleLike()
 
-  if (props.details) {
-    location.reload()
-  }
+  // if (props.details) {
+  //   location.reload()
+  // }
 }
 
 const createdAt = computed(() => {
@@ -157,13 +165,15 @@ console.log(props.data.user)
             <Icon
               :name="
                 computed(() => {
-                  return hasLiked ? 'bi:heart-fill' : 'bi:heart'
+                  return hasLiked && props.data.id
+                    ? 'bi:heart-fill'
+                    : 'bi:heart'
                 }).value
               "
               size="1.3rem"
               :color="
                 computed(() => {
-                  return hasLiked ? 'red' : ''
+                  return hasLiked && props.data.id ? 'red' : ''
                 }).value
               "
             />

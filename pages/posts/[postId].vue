@@ -1,19 +1,29 @@
 <!-- eslint-disable import/order -->
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import usePost from '../../composables/usePost';
+import { storeToRefs } from 'pinia'
+import { usePostsStore } from '../../store/posts'
+
+// import usePost from '../../composables/usePost'
 
 const router = useRouter()
 const { postId } = router.currentRoute.value.params
 const currentPostid = postId as string
 
-const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
+// const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
 
+const { setCurrentPost } = usePostsStore()
+// const { setCurrentPost } = usePostStore()
+const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
+
+await setCurrentPost(currentPostid)
+
+console.log(currentPost.value)
 </script>
 <template>
   <div>
     <div
-      v-if="isLoading && !fetchedPost"
+      v-if="!currentPost"
       class="flex justify-center items-start h-full pt-32"
     >
       <UISpinner />
@@ -23,7 +33,7 @@ const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
 
       <PostsItem
         v-if="postId"
-        :data="fetchedPost as Record<string, any>"
+        :data="currentPost as Record<string, any>"
         :details="true"
       />
       <UIForm
@@ -32,7 +42,7 @@ const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
         placeholder="Tweet your reply"
         :details="true"
       />
-      <PostsCommentFeed v-if="fetchedPost" :comments="fetchedPost?.comments" />
+      <PostsCommentFeed v-if="currentPost" :comments="currentPost?.comments" />
     </div>
   </div>
 </template>

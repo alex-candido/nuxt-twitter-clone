@@ -1,43 +1,53 @@
-/* eslint-disable prettier/prettier */
-import { like } from '../store/like';
-import useLoginModal from './useLoginModal';
+// /* eslint-disable prettier/prettier */
+// import { CurrentUser } from '../types/user'
+// import useLoginModal from './useLoginModal'
 
-const useLike = ({ postId, userId }: { postId: string; userId: string }) => {
-  const { isCurrentUser, isCurrentPost, getCurrentUser, getCurrentPostById } =
-    like()
-  getCurrentUser()
-  getCurrentPostById(postId)
+// const useLike = ({
+//   postId,
+//   currentUser,
+//   likedIds,
+// }: {
+//   postId: string
+//   currentUser: CurrentUser | null
+//   likedIds?: string[]
+// }) => {
 
-  const hasLiked = computed(() => {
-    const list = isCurrentPost?.likedIds || []
-    if (isCurrentUser?.id) {
-      return list.includes(isCurrentUser?.id)
-    }
-  })
+//   const hasLiked = computed(() => {
+//     const list = likedIds || []
+//     if (currentUser?.id) {
+//       return list.includes(currentUser?.id)
+//     }
+//   })
 
-  const toggleLike = async () => {
-    if (!isCurrentUser) {
-      return useLoginModal.onOpen()
-    }
+//   const toggleLike = async () => {
+//       console.log({likedIds, postId, currentUser, hasLiked: hasLiked.value})
+//     if (!currentUser) {
+//       return useLoginModal.onOpen()
+//     }
 
-    try {
-      if (hasLiked.value) {
-        await useFetch(`/api/like`, { method: 'DELETE', body: { postId, isCurrentUser } })
-      } else {
-        await useFetch(`/api/like`,{ method: 'POST', body: { postId, isCurrentUser }})
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        return error.message
-      }
-    }
-  }
+//     try {
+//       if (hasLiked.value) {
+//         await useFetch(`/api/like`, {
+//           method: 'DELETE',
+//           body: { postId, isCurrentUser: currentUser },
+//         })
+//       } else {
+//         await useFetch(`/api/like`, {
+//           method: 'POST',
+//           body: { postId, isCurrentUser: currentUser },
+//         })
+//       }
+//     } catch (error) {
+//       if (error instanceof Error) {
+//         return error.message
+//       }
+//     }
+//   }
 
-  return {
-    hasLiked: hasLiked.value,
-    toggleLike,
-    userId,
-  }
-}
+//   return {
+//     toggleLike,
+//     hasLiked
+//   }
+// }
 
-export default useLike
+// export default useLike

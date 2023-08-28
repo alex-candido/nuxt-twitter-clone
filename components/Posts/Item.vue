@@ -1,4 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable import/order -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
@@ -6,14 +8,17 @@
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import { formatDistanceToNowStrict } from 'date-fns';
-import useLike from '../../services/useLike';
-import useLoginModal from '../../services/useLoginModal';
+import { formatDistanceToNowStrict } from 'date-fns'
+import { storeToRefs } from 'pinia'
+// import useLike from '../../services/useLike';
+import useLoginModal from '../../services/useLoginModal'
+import { usePostsStore } from '../../store/posts'
+import { useUserStore } from '../../store/user'
 
 const props = defineProps({
   data: {
     type: Object,
-    required: true
+    required: true,
   },
   userId: {
     type: String,
@@ -22,8 +27,49 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { data: currentUser } = await useCurrentUser()
-const { hasLiked, toggleLike } = await useLike({ postId: props.data.id, userId: props.userId});
+const { setCurrentPosts } = usePostsStore()
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+
+const likePost = async () => {
+  await useFetch(`/api/like`, {
+    method: 'POST',
+    body: { postId: props.data.id, isCurrentUser: isCurrentUser.value },
+  })
+  await setCurrentPosts()
+}
+
+const unlikePost = async () => {
+  await useFetch(`/api/like`, {
+    method: 'DELETE',
+    body: { postId: props.data.id, isCurrentUser: isCurrentUser.value },
+  })
+  console.log('delete')
+  await setCurrentPosts()
+}
+
+// console.log(fetchedPost.value)
+
+const hasLiked = computed(() => {
+  const list = props.data.likedIds || []
+  if (isCurrentUser.value?.id) {
+    return list.includes(isCurrentUser.value?.id)
+  }
+})
+
+console.log(props.data.likedIds)
+
+const toggleLike = async () => {
+  if (props.data.likedIds.length < 1) {
+    likePost()
+  }
+  if (hasLiked.value) {
+    unlikePost()
+  } else {
+    likePost()
+  }
+
+  await setCurrentPosts()
+}
 
 const goToUser = (event: any) => {
   event.stopPropagation()
@@ -38,11 +84,11 @@ const goToPost = (event: any) => {
 const onLike = async (event: any) => {
   event.stopPropagation()
 
-  if (!currentUser) {
+  if (!isCurrentUser) {
     return useLoginModal.onOpen()
   }
 
-  toggleLike()
+  await toggleLike()
 }
 
 const createdAt = computed(() => {
@@ -50,9 +96,8 @@ const createdAt = computed(() => {
     return null
   }
 
-  return formatDistanceToNowStrict(new Date(props.data.createdAt));
+  return formatDistanceToNowStrict(new Date(props.data.createdAt))
 })
-
 </script>
 <template>
   <div
@@ -60,20 +105,20 @@ const createdAt = computed(() => {
     @click="goToPost"
   >
     <div class="flex flex-row items-start gap-3">
-      <UIAvatar :user-id="data.user.id || ''" />
+      <UIAvatar :user-id="props.data.id || ''" />
       <div>
         <div class="flex flex-row items-center gap-2">
           <p
             class="text-white font-semibold cursor-pointer hover:underline"
             @click="goToUser"
           >
-            {{ data.user.name }}
+            {{ props.data.name }}
           </p>
           <span
             class="text-neutral-500 cursor-pointer hover:underline hidden md:block"
             @click="goToUser"
           >
-            @{{ data.user.username }}
+            @{{ props.data.username }}
           </span>
           <span class="text-neutral-500 text-sm">{{ createdAt }}</span>
         </div>
@@ -89,7 +134,7 @@ const createdAt = computed(() => {
             class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500"
           >
             <Icon name="ant-design:message-outlined" size="1.5rem" />
-            <p>{{ data.comments?.length || 0 }}</p>
+            <p>{{ props.data.comments?.length || 0 }}</p>
           </div>
           <div
             class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500"

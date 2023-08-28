@@ -11,6 +11,7 @@ import usePosts from '../../composables/usePosts'
 import useSetPost from '../../composables/useSetPost'
 import useLoginModal from '../../services/useLoginModal'
 import useRegisterModal from '../../services/useRegisterModal'
+import { usePostsStore } from '../../store/posts'
 import { useToastStore } from '../../store/toast'
 const { onOpen } = useToastStore()
 const { data: currentUser } = await useCurrentUser()
@@ -30,6 +31,7 @@ const props = defineProps({
   },
 })
 
+const { setCurrentPosts } = usePostsStore()
 const { execute: mutatePosts } = await usePosts()
 const { execute: mutatePost } = await usePost(props.postId)
 
@@ -54,9 +56,9 @@ const onSubmit = async () => {
     })
 
     currentPost.text = ''
+    await setCurrentPosts()
     await mutatePosts()
     await mutatePost()
-    location.reload()
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message

@@ -32,6 +32,8 @@ export default defineEventHandler(async (event) => {
 
       return currentPosts
     }
+
+    return 'hello'
   } catch (error) {
     return sendError(
       event,

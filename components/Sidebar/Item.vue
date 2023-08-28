@@ -2,8 +2,11 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia';
 import useLoginModal from '../../services/useLoginModal';
-const { data: currentUser } = await useCurrentUser()
+import { useUserStore } from '../../store/user';
+
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
 const props = defineProps({
   label: {
@@ -39,7 +42,7 @@ const handleClick = () => {
     return props.onClick()
   }
 
-  if (props.auth && !currentUser) {
+  if (props.auth && !isCurrentUser) {
     useLoginModal.onOpen()
   } else if (props.href) {
     router.push(props.href)

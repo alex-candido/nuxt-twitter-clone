@@ -4,8 +4,6 @@ const usePosts = async () => {
     { key: 'use-posts', method: 'GET' },
   )
 
-  console.log(data.value)
-
   return {
     data: data.value,
     error,

@@ -29,6 +29,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  details: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const { setCurrentPosts } = usePostsStore()
@@ -59,6 +63,10 @@ const onSubmit = async () => {
     await setCurrentPosts()
     await mutatePosts()
     await mutatePost()
+
+    if (props.details) {
+      location.reload()
+    }
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message

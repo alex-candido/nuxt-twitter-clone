@@ -31,6 +31,8 @@ const items = [
   },
 ]
 
+console.log(isCurrentUser.value?.id)
+
 </script>
 <template>
   <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">

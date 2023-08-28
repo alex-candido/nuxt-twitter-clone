@@ -14,33 +14,28 @@ const props = defineProps({
   },
 })
 
-const currentPost = ref([] as CurrentPost[] | null)
+const currentPosts = ref([] as CurrentPost[] | null)
 
 onMounted(() => {
   watchEffect(() => {
     if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-      currentPost.value = getCurrentPosts.value
+      currentPosts.value = getCurrentPosts.value
     }
   })
 })
 
 watch(
-  () => currentPost.value,
+  () => currentPosts.value,
   () => {
     if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-      currentPost.value = getCurrentPosts.value
+      currentPosts.value = getCurrentPosts.value
     }
   },
 )
 </script>
 <template>
-  <button
-    class="bg-sky-500 px-5 py-3text-xl disabled:opacity-7 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2"
-  >
-    Atualizar
-  </button>
   <div
-    v-for="(post, index) in currentPost"
+    v-for="(post, index) in currentPosts"
     :key="index"
     class="dark:bg-dim-900"
   >

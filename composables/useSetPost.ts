@@ -16,8 +16,6 @@ const useSetPost = async ({ url, text, id }: UsersPayloadInterface) => {
     },
   )
 
-  console.log({ url, text, id })
-
   return {
     data: data.value,
     error,

@@ -10,8 +10,9 @@
 <script lang="ts" setup>
 import { formatDistanceToNowStrict } from 'date-fns'
 import { storeToRefs } from 'pinia'
-// import useLike from '../../services/useLike';
+import useSetLike from '../../composables/useSetLike'
 import useLoginModal from '../../services/useLoginModal'
+import { usePostStore } from '../../store/post'
 import { usePostsStore } from '../../store/posts'
 import { useUserStore } from '../../store/user'
 
@@ -24,30 +25,26 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  details: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const router = useRouter()
 const { setCurrentPosts } = usePostsStore()
+const { setCurrentPost } = usePostStore()
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
 const likePost = async () => {
-  await useFetch(`/api/like`, {
-    method: 'POST',
-    body: { postId: props.data.id, isCurrentUser: isCurrentUser.value },
-  })
+  await useSetLike({postId: props.data.id, method:'POST', currentUser: isCurrentUser.value})
   await setCurrentPosts()
 }
 
 const unlikePost = async () => {
-  await useFetch(`/api/like`, {
-    method: 'DELETE',
-    body: { postId: props.data.id, isCurrentUser: isCurrentUser.value },
-  })
-  console.log('delete')
+  await useSetLike({postId: props.data.id, method:'DELETE', currentUser: isCurrentUser.value})
   await setCurrentPosts()
 }
-
-// console.log(fetchedPost.value)
 
 const hasLiked = computed(() => {
   const list = props.data.likedIds || []
@@ -55,8 +52,6 @@ const hasLiked = computed(() => {
     return list.includes(isCurrentUser.value?.id)
   }
 })
-
-console.log(props.data.likedIds)
 
 const toggleLike = async () => {
   if (props.data.likedIds.length < 1) {
@@ -69,6 +64,7 @@ const toggleLike = async () => {
   }
 
   await setCurrentPosts()
+  await setCurrentPost(props.data.id)
 }
 
 const goToUser = (event: any) => {
@@ -81,7 +77,7 @@ const goToPost = (event: any) => {
   router.push(`/posts/${props.data.id}`)
 }
 
-const onLike = async (event: any) => {
+const onLike = async (event: Event) => {
   event.stopPropagation()
 
   if (!isCurrentUser) {
@@ -89,6 +85,10 @@ const onLike = async (event: any) => {
   }
 
   await toggleLike()
+
+  if (props.details) {
+    location.reload()
+  }
 }
 
 const createdAt = computed(() => {
@@ -98,6 +98,13 @@ const createdAt = computed(() => {
 
   return formatDistanceToNowStrict(new Date(props.data.createdAt))
 })
+
+onMounted(async () => {
+  await setCurrentPost(props.data.id)
+})
+
+console.log(props.data.user)
+
 </script>
 <template>
   <div
@@ -105,20 +112,20 @@ const createdAt = computed(() => {
     @click="goToPost"
   >
     <div class="flex flex-row items-start gap-3">
-      <UIAvatar :user-id="props.data.id || ''" />
+      <UIAvatar :user-id="props.data.user.id || ''" />
       <div>
         <div class="flex flex-row items-center gap-2">
           <p
             class="text-white font-semibold cursor-pointer hover:underline"
             @click="goToUser"
           >
-            {{ props.data.name }}
+            {{ props.data.user.name }}
           </p>
           <span
-            class="text-neutral-500 cursor-pointer hover:underline hidden md:block"
+            class="text-neutral-500 cursor-pointer hover:underline md:block"
             @click="goToUser"
           >
-            @{{ props.data.username }}
+            @{{ props.data.user.username }}
           </span>
           <span class="text-neutral-500 text-sm">{{ createdAt }}</span>
         </div>

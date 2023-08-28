@@ -42,12 +42,13 @@ const handleClick = () => {
     return props.onClick()
   }
 
-  if (props.auth && !isCurrentUser) {
+  if (props.auth && !isCurrentUser.value?.id) {
     useLoginModal.onOpen()
   } else if (props.href) {
     router.push(props.href)
   }
 }
+
 </script>
 <template>
   <div class="flex flex-grow items-center" @click="handleClick">

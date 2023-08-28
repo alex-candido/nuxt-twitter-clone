@@ -46,8 +46,6 @@ export default defineEventHandler(async (event) => {
 
     const isUpdatedPost = await updatedPost(postData)
 
-    console.log({ method, postId, isCurrentUser, isUpdatedPost })
-
     return { method, postId, isCurrentUser, isUpdatedPost }
   } catch (error) {
     return sendError(

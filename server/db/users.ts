@@ -46,8 +46,6 @@ export const getUserById = async (userId: string): Promise<any> => {
     },
   })
 
-  console.log(userId)
-
   if (!user) {
     console.log('Not found user')
   }

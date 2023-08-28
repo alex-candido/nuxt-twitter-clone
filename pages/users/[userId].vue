@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-const router = useRouter()
-const { userId } = router.currentRoute.value.params
-
-// const { data: fetchedUser, isLoading } = useUser(userId)
+const router = useRoute()
+const userId = router.params.userId as string
 </script>
 <template>
   <div>
@@ -11,9 +9,9 @@ const { userId } = router.currentRoute.value.params
     </div>
     <div v-else>
       <UIHeader :show-back-arrow="true" :label="'UserName'" />
-      <UsersHero :user-id="userId[0]" />
-      <UsersBio :user-id="userId[0]" />
-      <PostsFeed :user-id="userId[0]" />
+      <UsersHero :user-id="userId" />
+      <UsersBio :user-id="userId" />
+      <PostsFeed :user-id="userId" />
     </div>
   </div>
 </template>

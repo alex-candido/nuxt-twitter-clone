@@ -8,9 +8,6 @@ const fetchedNotifications = [
     createdAt: '',
   },
 ]
-// onMounted(() => {
-//   mutateCurrentUser()
-// })
 </script>
 
 <template>

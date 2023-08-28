@@ -11,6 +11,9 @@ defineProps({
   },
 })
 
+// const { data: currentUser } = useCurrentUser();
+// const { data: fetchedUser } = useUser(userId);
+
 const toggleFollow = () => {
   return console.log('toggleFollow')
 }

@@ -26,7 +26,5 @@ export default defineEventHandler(async (event) => {
     throw new Error('Not signed in')
   }
 
-  return {
-    currentUser,
-  }
+  return currentUser
 })

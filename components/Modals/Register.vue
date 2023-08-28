@@ -6,6 +6,8 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
+import { useToastStore } from '../../store/toast';
+const { onOpen } = useToastStore()
 const { signIn,  } = useAuth()
 
 const currentRegister = reactive({
@@ -54,6 +56,11 @@ const onSubmit = async () => {
     currentRegister.isLoading = false
   }
 }
+
+const handleSubmit = () => {
+  onOpen('You are registered!')
+  onSubmit()
+}
 </script>
 <template>
   <Modal
@@ -62,7 +69,7 @@ const onSubmit = async () => {
     title="Create an account"
     action-label="Register"
     @close="useRegisterModal.onClose()"
-    @submit="onSubmit"
+    @submit="handleSubmit"
   >
     <template #default>
       <div class="flex flex-col gap-4">

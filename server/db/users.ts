@@ -38,3 +38,47 @@ export const getUserByEmail = async (email: string): Promise<User> => {
 
   return user
 }
+
+export const getUserById = async (userId: string): Promise<any> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found user')
+  }
+  return user
+}
+
+export const getAllUsers = async (): Promise<any> => {
+  const users = await prisma.user.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+  if (!users) {
+    console.log('Not found users')
+  }
+  return users
+}
+
+export const updateIsNotificationUser = async (
+  userId: string,
+): Promise<any> => {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      hasNotification: true,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found users')
+  }
+  return user
+}

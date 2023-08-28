@@ -1,12 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-const users = [
-  {
-    id: 'dsvvç6354d36snt1nbbzreent65d',
-    name: 'Alex',
-    username: 'Alex Candido',
-  },
-]
+import useUsers from '../../composables/useUsers';
+
+const { data: users } = await useUsers()
 </script>
 <template>
   <div class="h-screen px-6 py-4 hidden lg:block dark:bg-dim-900">

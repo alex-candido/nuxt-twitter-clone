@@ -43,13 +43,12 @@ const handleSubmit = () => {
   if (props.disabled) {
     return
   }
-
   props.onSubmit()
 }
 </script>
 <template>
   <div
-    v-if="isOpen"
+    v-show="isOpen"
     class="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800bg-opacity-70"
   >
     <div

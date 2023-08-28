@@ -1,14 +1,24 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useToastModal from '../../services/useToastModal';
+import { useToastStore } from '../../store/toast';
+const { onClose, isToast } = useToastStore()
+const { status } = useAuth()
+
+onMounted(() => {
+  if (status.value === 'unauthenticated') {
+    onClose()
+  }
+  setTimeout(() => {
+    onClose()
+  }, 5000)
+})
 </script>
 
 <template>
   <div>
     <div
-      v-if="useToastModal.state.isOpen"
+      v-if="computed(() => isToast.isToast).value"
       class="absolute top-4 left-1/2 transform -translate-x-1/2 z-50"
     >
       <div
@@ -31,12 +41,14 @@ import useToastModal from '../../services/useToastModal';
           </svg>
           <span class="sr-only">Check icon</span>
         </div>
-        <div class="ml-3 text-base font-medium pr-1">Logged</div>
+        <div class="ml-3 text-base font-medium pr-1">
+          {{ isToast.successMsg }}
+        </div>
         <button
           type="button"
           class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
           aria-label="Close"
-          @click="useToastModal.onClose()"
+          @click="onClose()"
         >
           <span class="sr-only">Close</span>
           <svg

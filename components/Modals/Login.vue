@@ -1,4 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable import/order -->
+<!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable vue/no-export-in-script-setup -->
+<!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable require-await -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
@@ -6,7 +12,9 @@
 <script lang="ts" setup>
 import useLoginModal from '../../services/useLoginModal';
 import useRegisterModal from '../../services/useRegisterModal';
-const { signIn,  } = useAuth()
+import { useToastStore } from '../../store/toast';
+const { onOpen } = useToastStore()
+const { signIn, status } = useAuth()
 
 const currentLogin = reactive({
   email: '',
@@ -14,6 +22,7 @@ const currentLogin = reactive({
   errorMsg: '',
   successMsg: '',
   isLoading: false,
+  isToast: false,
 })
 
 const onToggle = () => {
@@ -45,6 +54,17 @@ const onSubmit = async () => {
     currentLogin.isLoading = false
   }
 }
+
+const handleSubmit = () => {
+  onSubmit()
+  onOpen('You are logged in!')
+}
+
+onBeforeMount(() => {
+  if (status.value === 'authenticated') {
+    useLoginModal.onClose()
+  }
+})
 </script>
 <template>
   <Modal
@@ -53,7 +73,7 @@ const onSubmit = async () => {
     title="Login"
     action-label="Sign in"
     @close="useLoginModal.onClose()"
-    @submit="onSubmit"
+    @submit="handleSubmit"
   >
     <template #default>
       <div class="flex flex-col gap-4">

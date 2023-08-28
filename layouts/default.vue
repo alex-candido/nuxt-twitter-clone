@@ -1,8 +1,9 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts" setup>
-import { usePostsStore } from '../store/posts';
-import { useUserStore } from '../store/user';
+import { storeToRefs } from 'pinia'
+import { usePostsStore } from '../store/posts'
+import { useUserStore } from '../store/user'
 
 const { setCurrentuser } = useUserStore()
 const { setCurrentPosts } = usePostsStore()

@@ -1,13 +1,19 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-// if (!session) {
-//   return {
-//     redirect: {
-//       destination: '/',
-//       permanent: false,
-//     },
-//   }
-// }
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '../store/user'
+import useLoginModal from '../services/useLoginModal'
+
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+
+const router = useRouter()
+
+onBeforeMount(() => {
+  if (!isCurrentUser.value?.id) {
+    useLoginModal.onOpen()
+    router.push('/')
+  }
+})
 </script>
 <template>
   <div>

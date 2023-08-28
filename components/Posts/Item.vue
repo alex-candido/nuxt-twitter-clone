@@ -27,8 +27,8 @@ const props = defineProps({
   },
   details: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const router = useRouter()
@@ -37,12 +37,20 @@ const { setCurrentPost } = usePostStore()
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
 const likePost = async () => {
-  await useSetLike({postId: props.data.id, method:'POST', currentUser: isCurrentUser.value})
+  await useSetLike({
+    postId: props.data.id,
+    method: 'POST',
+    currentUser: isCurrentUser.value,
+  })
   await setCurrentPosts()
 }
 
 const unlikePost = async () => {
-  await useSetLike({postId: props.data.id, method:'DELETE', currentUser: isCurrentUser.value})
+  await useSetLike({
+    postId: props.data.id,
+    method: 'DELETE',
+    currentUser: isCurrentUser.value,
+  })
   await setCurrentPosts()
 }
 
@@ -80,7 +88,7 @@ const goToPost = (event: any) => {
 const onLike = async (event: Event) => {
   event.stopPropagation()
 
-  if (!isCurrentUser) {
+  if (!isCurrentUser.value?.id) {
     return useLoginModal.onOpen()
   }
 
@@ -104,7 +112,6 @@ onMounted(async () => {
 })
 
 console.log(props.data.user)
-
 </script>
 <template>
   <div

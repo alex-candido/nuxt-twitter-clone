@@ -1,14 +1,6 @@
 import { Comment } from "./comment"
 import { User } from "./user"
 
-interface Likes {
-  id: string
-  userId: string
-  postId: string
-  createdAt: string
-}
-
-
 export interface CurrentPost {
   id: string
   body: string

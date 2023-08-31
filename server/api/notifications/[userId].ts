@@ -1,7 +1,6 @@
-/* eslint-disable require-await */
 /* eslint-disable import/order */
-
-// import { getNotificationsByUserId } from '../../db/notifications'
+import { updateIsNotificationUser } from '~/server/db/users'
+import { getNotificationsByUserId } from '../../db/notifications'
 
 export default defineEventHandler(async (event) => {
   const method = event.method
@@ -13,13 +12,19 @@ export default defineEventHandler(async (event) => {
     )
   }
 
-  const userId = getRouterParam(event, 'userId')
-
   try {
-    // const notifications = await getNotificationsByUserId(userId)
-    // await updateIsNotificationUser(userId)
+    const userId = getRouterParam(event, 'userId')
 
-    return { method, userId }
+    if (!userId) {
+      return sendError(
+        event,
+        createError({ statusCode: 400, statusMessage: 'Invalid ID' }),
+      )
+    }
+    const notifications = await getNotificationsByUserId(userId)
+    await updateIsNotificationUser(userId)
+
+    return notifications
   } catch (error) {
     return sendError(
       event,

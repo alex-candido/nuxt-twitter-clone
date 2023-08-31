@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import { updateIsNotificationUser } from '~/server/db/users'
+import { updateIsNotificationUser } from '../../db/notifications'
 import { getNotificationsByUserId } from '../../db/notifications'
 
 export default defineEventHandler(async (event) => {
@@ -22,8 +22,9 @@ export default defineEventHandler(async (event) => {
       )
     }
     const notifications = await getNotificationsByUserId(userId)
-    await updateIsNotificationUser(userId)
+    const NotificationUser = await updateIsNotificationUser(userId)
 
+    console.log({ notifications, NotificationUser })
     return notifications
   } catch (error) {
     return sendError(

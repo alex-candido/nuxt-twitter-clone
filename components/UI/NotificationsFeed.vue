@@ -2,11 +2,23 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
+import { useNotificationsStore } from '../../store/notifications'
+import { useUserStore } from '../../store/user'
 
-import { useNotificationsStore } from '../../store/notifications';
+const { setNotifications } = useNotificationsStore()
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+const { getNotifications: fetchedNotifications } = storeToRefs(
+  useNotificationsStore(),
+)
 
-const { getNotifications: fetchedNotifications } = useNotificationsStore()
-
+onMounted(() => {
+  watchEffect(async () => {
+    if (isCurrentUser.value?.id) {
+      await setNotifications(isCurrentUser.value?.id)
+    }
+  })
+})
 </script>
 
 <template>
@@ -23,7 +35,7 @@ const { getNotifications: fetchedNotifications } = useNotificationsStore()
         :key="notification.id"
         class="flex flex-row items-center p-6 gap-4 border-b-[1px] border-neutral-800"
       >
-        <BsTwitterIcon class="text-white" size="32" />
+        <Icon name="ri:twitter-x-fill" size="1.5rem" color="white" />
         <p class="text-white">{{ notification.body }}</p>
       </div>
     </div>

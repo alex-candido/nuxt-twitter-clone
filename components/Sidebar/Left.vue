@@ -35,8 +35,6 @@ const items = [
     size: '1.3rem',
   },
 ]
-
-console.log(props.user)
 </script>
 <template>
   <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">
@@ -50,7 +48,7 @@ console.log(props.user)
           :label="item.label"
           :icon="item.icon"
           :auth="item.auth"
-          :alert="item.alert"
+          :alert="item?.alert"
           :size="item.size"
         />
         <SidebarItem

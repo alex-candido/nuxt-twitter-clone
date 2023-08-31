@@ -40,3 +40,21 @@ export const getNotificationsByUserId = async (
 
   return notifications
 }
+
+export const updateIsNotificationUser = async (
+  userId: string,
+): Promise<any> => {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      hasNotification: false,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found users')
+  }
+  return user
+}

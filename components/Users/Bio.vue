@@ -2,7 +2,7 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useEditModal from '../../services/useEditModal';
+import useEditModal from '../../services/useEditModal'
 
 defineProps({
   userId: {
@@ -17,8 +17,6 @@ defineProps({
 const toggleFollow = () => {
   return console.log('toggleFollow')
 }
-
-
 </script>
 <template>
   <div class="border-b-[1px] border-neutral-800 pb-4">

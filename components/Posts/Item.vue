@@ -35,8 +35,6 @@ const { setCurrentPosts, setCurrentPost } = usePostsStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
-console.log(currentPost.value)
-
 const likePost = async () => {
   await useSetLike({
     postId: props.data.id,
@@ -99,10 +97,6 @@ const onLike = async (event: Event) => {
   }
 
   await toggleLike()
-
-  // if (props.details) {
-  //   location.reload()
-  // }
 }
 
 const createdAt = computed(() => {

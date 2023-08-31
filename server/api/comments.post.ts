@@ -1,7 +1,7 @@
 import { createComment } from '../db/comments'
 import { createNotification } from '../db/notifications'
 import { getPostById } from '../db/posts'
-import { updateIsNotificationUser } from '../db/users'
+import { notificationUser } from '../db/users'
 
 export default defineEventHandler(async (event) => {
   const method = event.method
@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
 
     if (post?.userId) {
       notification = await createNotification(notificationData)
-      isNotificationUser = await updateIsNotificationUser(post?.userId)
+      isNotificationUser = await notificationUser(post?.userId)
     }
 
     return { comment, notification, isNotificationUser }

@@ -65,9 +65,7 @@ export const getAllUsers = async (): Promise<any> => {
   return users
 }
 
-export const updateIsNotificationUser = async (
-  userId: string,
-): Promise<any> => {
+export const notificationUser = async (userId: string): Promise<any> => {
   const user = await prisma.user.update({
     where: {
       id: userId,

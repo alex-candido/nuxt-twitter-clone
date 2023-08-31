@@ -116,8 +116,6 @@ const createdAt = computed(() => {
 onMounted(async () => {
   await setCurrentPost(props.data.id)
 })
-
-console.log(props.data.user)
 </script>
 <template>
   <div

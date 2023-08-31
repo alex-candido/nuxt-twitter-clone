@@ -10,6 +10,10 @@ defineProps({
   },
 })
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+
+const fetchedUser = {
+  coverImage: '',
+}
 </script>
 <template>
   <div>

@@ -1,26 +1,18 @@
+<!-- eslint-disable import/order -->
+<!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia';
-import { useUserStore } from '../../store/user';
 
-const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+import { useNotificationsStore } from '../../store/notifications';
 
-const fetchedNotifications = [
-  {
-    id: 'aflhegvabv865bfb',
-    body: 'Lorem Ipsum',
-    userId: 'sdvnjosdvpvv3544114',
-    createdAt: '',
-  },
-]
+const { getNotifications: fetchedNotifications } = useNotificationsStore()
 
-console.log(isCurrentUser.value)
 </script>
 
 <template>
   <div>
     <div
-      v-if="fetchedNotifications.length === 0"
+      v-if="fetchedNotifications?.length === 0"
       class="text-neutral-600 text-center p-6 text-xl"
     >
       No notifications

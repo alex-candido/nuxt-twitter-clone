@@ -1,8 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { useNotificationsStore } from '../store/notifications'
 import { usePostsStore } from '../store/posts'
 import { useUserStore } from '../store/user'
 

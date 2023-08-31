@@ -1,8 +1,4 @@
-interface UseUserPayloadInterface {
-  userId?: string
-}
-
-const useUser = async (userId: UseUserPayloadInterface) => {
+const useUser = async (userId: string) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
     `/api/users/${userId}`,
     { method: 'GET' },

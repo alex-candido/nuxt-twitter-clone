@@ -24,12 +24,14 @@ export default defineEventHandler(async (event) => {
       )
     }
 
+    console.log(userId)
+
 
     const currentUser = await getUserById(userId)
 
-    return {
-      user: currentUser,
-    }
+    console.log(currentUser)
+
+    return currentUser
   } catch (error) {
     return sendError(
       event,

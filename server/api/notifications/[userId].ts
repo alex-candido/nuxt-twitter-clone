@@ -22,9 +22,8 @@ export default defineEventHandler(async (event) => {
       )
     }
     const notifications = await getNotificationsByUserId(userId)
-    const NotificationUser = await updateIsNotificationUser(userId)
+    await updateIsNotificationUser(userId)
 
-    console.log({ notifications, NotificationUser })
     return notifications
   } catch (error) {
     return sendError(

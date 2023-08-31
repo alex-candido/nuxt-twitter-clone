@@ -11,7 +11,9 @@ const currentPostid = postId as string
 const { setCurrentPost } = usePostsStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 
-await setCurrentPost(currentPostid)
+onBeforeMount(async () => {
+  await setCurrentPost(currentPostid)
+})
 </script>
 <template>
   <div>

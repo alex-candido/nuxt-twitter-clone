@@ -2,7 +2,7 @@
 <script setup lang="ts">
 const props = defineProps({
   label: {
-    type: String,
+    type: String as PropType<string | null | undefined>,
     required: true,
   },
   showBackArrow: {

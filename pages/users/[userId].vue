@@ -1,30 +1,33 @@
+<!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { useUserStore } from '../../store/user'
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '../../store/user';
+import { CurrentUser } from '../../types/user';
 
-const router = useRouter()
-const { userId: currentUserId } = router.currentRoute.value.params
-const userId = currentUserId as string
-
+const route = useRoute()
 const { setUser } = useUserStore()
-const { getUser: fetchedUser } = storeToRefs(useUserStore())
+const { getUser: fetchedUser, isLoading } = storeToRefs(useUserStore())
 
-onBeforeMount(async () => {
-  await setUser(userId)
+const currentUser = ref({} as CurrentUser | null)
+
+watchEffect(async() => {
+  if(route.params.userId) {
+    await setUser({userId: route.params.userId as string})
+    currentUser.value = fetchedUser.value
+  }
 })
 
-console.log(fetchedUser.value)
 </script>
 <template>
   <div>
-    <div v-if="false" class="flex justify-center items-center h-full">
+    <div v-if="isLoading" class="flex justify-center items-center h-full">
       <ClipLoader color="lightblue" size="80" />
     </div>
     <div v-else>
-      <UIHeader :show-back-arrow="true" :label="fetchedUser?.name" />
-      <UsersHero :user-id="userId" />
-      <UsersBio :user-id="userId" />
-      <PostsFeed :user-id="userId" />
+      <UIHeader :show-back-arrow="true" :label="currentUser?.name" />
+      <UsersHero :user-id="route.params.userId as string" />
+      <UsersBio :user-id="route.params.userId as string" />
+      <PostsFeed :user-id="route.params.userId as string" />
     </div>
   </div>
 </template>

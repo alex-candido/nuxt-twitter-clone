@@ -1,8 +1,8 @@
 <!-- eslint-disable import/order -->
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { usePostsStore } from '../../store/posts'
+import { storeToRefs } from 'pinia';
+import { usePostsStore } from '../../store/posts';
 
 const router = useRouter()
 const { postId } = router.currentRoute.value.params

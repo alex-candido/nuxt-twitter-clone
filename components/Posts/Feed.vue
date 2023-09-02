@@ -49,10 +49,18 @@ onBeforeMount(() => {
 </script>
 <template>
   <div
-    v-for="(post, index) in currentPosts"
-    :key="index"
-    class="dark:bg-dim-900"
+    v-if="currentPosts?.length === 0"
+    class="text-neutral-600 text-center p-6 text-sm"
   >
-    <PostsItem :user-id="props.userId" :data="post" />
+    No Posts
+  </div>
+  <div v-else>
+    <div
+      v-for="(post, index) in currentPosts"
+      :key="index"
+      class="dark:bg-dim-900"
+    >
+      <PostsItem :user-id="props.userId" :data="post" />
+    </div>
   </div>
 </template>

@@ -6,8 +6,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import useCurrentUser from '../../composables/useCurrentUser'
-import usePost from '../../composables/usePost'
-import usePosts from '../../composables/usePosts'
 import useSetPost from '../../composables/useSetPost'
 import useLoginModal from '../../services/useLoginModal'
 import useRegisterModal from '../../services/useRegisterModal'
@@ -36,7 +34,7 @@ const props = defineProps({
 })
 
 const { setCurrentPosts, setCurrentPost } = usePostsStore()
-await setCurrentPost(props.postId)
+await setCurrentPost({postId: props.postId})
 
 const currentPost = reactive({
   text: '',
@@ -60,7 +58,7 @@ const onSubmit = async () => {
 
     currentPost.text = ''
     await setCurrentPosts()
-    await setCurrentPost(props.postId)
+    await setCurrentPost({postId: props.postId})
 
     // if (props.details) {
     //   location.reload()

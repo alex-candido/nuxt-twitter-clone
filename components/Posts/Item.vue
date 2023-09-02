@@ -44,7 +44,7 @@ const likePost = async () => {
     currentUser: isCurrentUser.value,
   })
   await setCurrentPosts()
-  await setCurrentPost(props.data.id)
+  await setCurrentPost({ postId: props.data.id })
   await setCurrentuser()
 }
 
@@ -55,7 +55,7 @@ const unlikePost = async () => {
     currentUser: isCurrentUser.value,
   })
   await setCurrentPosts()
-  await setCurrentPost(props.data.id)
+  await setCurrentPost({ postId: props.data.id })
   await setCurrentuser()
 }
 
@@ -80,7 +80,7 @@ const toggleLike = async () => {
   }
 
   await setCurrentPosts()
-  await setCurrentPost(props.data.id)
+  await setCurrentPost({ postId: props.data.id })
 }
 
 const goToUser = (event: any) => {
@@ -112,7 +112,7 @@ const createdAt = computed(() => {
 })
 
 onMounted(async () => {
-  await setCurrentPost(props.data.id)
+  await setCurrentPost({ postId: props.data.id })
 })
 </script>
 <template>

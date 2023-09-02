@@ -5,27 +5,38 @@ import { storeToRefs } from 'pinia';
 import { usePostsStore } from '../../store/posts';
 
 const router = useRouter()
-const { postId } = router.currentRoute.value.params
-const currentPostid = postId as string
-
 const { setCurrentPost } = usePostsStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 
-onBeforeMount(async () => {
-  await setCurrentPost(currentPostid)
+watchEffect(async () => {
+  if(router.currentRoute.value.params.postId){
+    await setCurrentPost({
+      postId: router.currentRoute.value.params.postId as string,
+    })
+  }
 })
+
+onBeforeMount(async () => {
+  if (router.currentRoute.value.params.postId) {
+    await setCurrentPost({
+      postId: router.currentRoute.value.params.postId as string,
+    })
+  }
+})
+
+console.log(router.currentRoute.value.params.postId)
 </script>
 <template>
   <div>
     <UIHeader show-back-arrow label="Tweet" />
 
     <PostsItem
-      v-if="postId"
+      v-if="router.currentRoute.value.params.postId"
       :data="currentPost as Record<string, any>"
       :details="true"
     />
     <UIForm
-      :post-id="currentPostid"
+      :post-id="router.currentRoute.value.params.postId as string"
       :is-comment="true"
       placeholder="Tweet your reply"
       :details="true"

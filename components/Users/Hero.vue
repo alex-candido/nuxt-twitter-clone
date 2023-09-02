@@ -1,30 +1,47 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '../../store/user';
+import { CurrentUser } from '../../types/user';
 
-defineProps({
+const props = defineProps({
   userId: {
     type: String,
     required: true,
   },
 })
-const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+const { setUser } = useUserStore()
+const { getUser: fetchedUser } = storeToRefs(useUserStore())
 
-const fetchedUser = {
-  coverImage: '',
-}
+const currentUser = ref({} as CurrentUser | null)
+
+watchEffect(async () => {
+  if (props.userId) {
+    await setUser({ userId: props.userId })
+    currentUser.value = fetchedUser.value
+  }
+})
+
+onMounted( () => {
+  console.log('entrou')
+})
+// await setUser({ userId: props.userId })
+// currentUser.value = fetchedUser.value
+
 </script>
 <template>
   <div>
     <div class="bg-neutral-700 h-44 relative">
       <nuxt-img
-        v-if="fetchedUser.coverImage"
-        :src="fetchedUser.coverImage"
+        v-if="currentUser?.coverImage"
+        :src="currentUser?.coverImage"
         fill
         alt="Cover Image"
         style="object-fit: cover"
       />
+      {{ currentUser }}
       <div class="absolute -bottom-16 left-4">
         <UIAvatar :user-id="userId" is-large has-border />
       </div>

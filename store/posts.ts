@@ -19,7 +19,7 @@ export const usePostsStore = defineStore('posts-store', {
       const { data: currentPosts } = await usePosts()
       this.isPosts = currentPosts
     },
-    async setCurrentPost(postId: string) {
+    async setCurrentPost({ postId }: { postId: string }) {
       const { data: currentPost } = await usePost(postId)
       this.isPost = currentPost
     },

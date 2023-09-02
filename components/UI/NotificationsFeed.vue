@@ -18,7 +18,6 @@ watchEffect(async () => {
     console.log('valor')
   }
 })
-
 </script>
 
 <template>

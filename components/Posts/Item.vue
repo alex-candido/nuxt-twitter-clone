@@ -10,6 +10,7 @@
 <script lang="ts" setup>
 import { formatDistanceToNowStrict } from 'date-fns'
 import { storeToRefs } from 'pinia'
+
 import useSetLike from '../../composables/useSetLike'
 import useLoginModal from '../../services/useLoginModal'
 import { usePostsStore } from '../../store/posts'
@@ -32,6 +33,7 @@ const props = defineProps({
 
 const router = useRouter()
 const { setCurrentPosts, setCurrentPost } = usePostsStore()
+const { setCurrentuser } = useUserStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
@@ -43,6 +45,7 @@ const likePost = async () => {
   })
   await setCurrentPosts()
   await setCurrentPost(props.data.id)
+  await setCurrentuser()
 }
 
 const unlikePost = async () => {
@@ -53,6 +56,7 @@ const unlikePost = async () => {
   })
   await setCurrentPosts()
   await setCurrentPost(props.data.id)
+  await setCurrentuser()
 }
 
 const hasLiked = computed(() => {

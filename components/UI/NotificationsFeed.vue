@@ -2,9 +2,9 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { useNotificationsStore } from '../../store/notifications'
-import { useUserStore } from '../../store/user'
+import { storeToRefs } from 'pinia';
+import { useNotificationsStore } from '../../store/notifications';
+import { useUserStore } from '../../store/user';
 
 const { setNotifications } = useNotificationsStore()
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
@@ -12,13 +12,13 @@ const { getNotifications: fetchedNotifications } = storeToRefs(
   useNotificationsStore(),
 )
 
-onMounted(() => {
-  watchEffect(async () => {
-    if (isCurrentUser.value?.id) {
-      await setNotifications(isCurrentUser.value?.id)
-    }
-  })
+watchEffect(async () => {
+  if (isCurrentUser.value?.id) {
+    await setNotifications(isCurrentUser.value?.id)
+    console.log('valor')
+  }
 })
+
 </script>
 
 <template>

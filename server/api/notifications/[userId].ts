@@ -1,6 +1,7 @@
-/* eslint-disable import/order */
-import { updateIsNotificationUser } from '../../db/notifications'
-import { getNotificationsByUserId } from '../../db/notifications'
+import {
+  getNotificationsByUserId,
+  updateIsNotificationUser,
+} from '../../db/notifications'
 
 export default defineEventHandler(async (event) => {
   const method = event.method

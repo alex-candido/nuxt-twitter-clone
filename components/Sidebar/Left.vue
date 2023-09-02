@@ -2,15 +2,11 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import { CurrentUser } from '../../types/user'
-const { signOut } = useAuth()
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '../../store/user';
 
-const props = defineProps({
-  user: {
-    type: Object as PropType<CurrentUser | null>,
-    required: true,
-  },
-})
+const { signOut } = useAuth()
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
 const items = [
   {
@@ -24,17 +20,18 @@ const items = [
     label: 'Notifications',
     href: '/notifications',
     auth: true,
-    alert: props.user?.hasNotification,
+    alert: isCurrentUser.value?.hasNotification,
     size: '1.3rem',
   },
   {
     icon: 'fa6-solid:user',
     label: 'Profile',
-    href: `/users/${props.user?.id}`,
+    href: `/users/${isCurrentUser.value?.id}`,
     auth: true,
     size: '1.3rem',
   },
 ]
+
 </script>
 <template>
   <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">
@@ -52,7 +49,7 @@ const items = [
           :size="item.size"
         />
         <SidebarItem
-          v-if="props.user?.id"
+          v-if="isCurrentUser?.id"
           icon="bx:log-out"
           label="Logout"
           size="1.3rem"

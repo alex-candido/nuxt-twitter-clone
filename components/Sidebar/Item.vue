@@ -2,9 +2,9 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import useLoginModal from '../../services/useLoginModal'
-import { useUserStore } from '../../store/user'
+import { storeToRefs } from 'pinia';
+import useLoginModal from '../../services/useLoginModal';
+import { useUserStore } from '../../store/user';
 const { setCurrentuser } = useUserStore()
 
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
@@ -43,6 +43,8 @@ const props = defineProps({
 const router = useRouter()
 
 const handleClick = async () => {
+  await setCurrentuser()
+
   if (props.onClick) {
     return props.onClick()
   }
@@ -52,8 +54,8 @@ const handleClick = async () => {
   } else if (props.href) {
     router.push(props.href)
   }
-  await setCurrentuser()
 }
+
 </script>
 <template>
   <div class="flex flex-grow items-center" @click="handleClick">
@@ -76,7 +78,7 @@ const handleClick = async () => {
         {{ props.label }}
       </p>
       <Icon
-        v-if="alert"
+        v-if="isCurrentUser?.hasNotification && props.alert"
         name="octicon:dot-fill-16"
         size="1.3rem"
         class="text-sky-500 absolute top-3 left-6"

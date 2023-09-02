@@ -42,7 +42,6 @@ onBeforeMount(async() => {
         alt="Cover Image"
         style="object-fit: cover"
       />
-      {{ currentUser }}
       <div class="absolute -bottom-16 left-4">
         <UIAvatar :user-id="userId" is-large has-border />
       </div>

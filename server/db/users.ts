@@ -9,6 +9,11 @@ export interface UserDataProps {
   name: string | null
 }
 
+export interface UpdatedUserProps {
+  userId: string
+  updatedFollowingIds: string[]
+}
+
 export const createUser = async (userData: UserDataProps): Promise<User> => {
   const finalUserData = {
     ...userData,
@@ -77,6 +82,22 @@ export const notificationUser = async (userId: string): Promise<any> => {
 
   if (!user) {
     console.log('Not found users')
+  }
+  return user
+}
+
+export const updatedUser = async (userData: UpdatedUserProps): Promise<any> => {
+  const user = await prisma.user.update({
+    where: {
+      id: userData.userId,
+    },
+    data: {
+      followingIds: userData.updatedFollowingIds,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found user')
   }
   return user
 }

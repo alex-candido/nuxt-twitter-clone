@@ -16,7 +16,7 @@ const props = defineProps({
 })
 
 const { setUser } = useUserStore()
-const { getUser: fetchedUser } = storeToRefs(useUserStore())
+const { getUser: fetchedUser, getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
 const currentUser = ref({} as CurrentUser | null)
 
@@ -47,7 +47,7 @@ const toggleFollow = () => {
   <div class="border-b-[1px] border-neutral-800 pb-4">
     <div class="flex justify-end p-2">
       <UIButton
-        v-if="true"
+        v-if="isCurrentUser?.id === userId"
         :secondary="false"
         :label="'Edit'"
         @click="useEditModal.onOpen()"
@@ -55,7 +55,7 @@ const toggleFollow = () => {
       <UIButton
         v-else
         class="button"
-        :label="true ? 'Unfollow' : 'Follow'"
+        :label="false ? 'Unfollow' : 'Follow'"
         :class="{
           'button-secondary': true,
           'button-outline': true,

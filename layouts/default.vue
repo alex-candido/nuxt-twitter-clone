@@ -1,17 +1,17 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script lang="ts" setup>
-import { usePostsStore } from '../store/posts';
+// import { usePostsStore } from '../store/posts';
 import { useUserStore } from '../store/user';
 
 const { setCurrentuser } = useUserStore()
-const { setCurrentPosts } = usePostsStore()
+// const { setCurrentPosts } = usePostsStore()
 
 const darkMode = ref(true)
 
 onMounted(async () => {
   await setCurrentuser()
-  await setCurrentPosts()
+  // await setCurrentPosts()
 })
 </script>
 <template>

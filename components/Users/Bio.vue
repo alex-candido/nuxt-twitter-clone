@@ -2,7 +2,7 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import useEditModal from '../../services/useEditModal'
+import useEditModal from '../../services/useEditModal';
 
 defineProps({
   userId: {
@@ -48,7 +48,7 @@ const toggleFollow = () => {
       <div class="flex flex-col mt-4">
         <p class="text-white">fetchedUser?.bio</p>
         <div class="flex flex-row items-center gap-2 mt-4 text-neutral-500">
-          <BiCalendar size="24" />
+          <!-- <BiCalendar size="24" /> -->
           <p>Joined createdAt</p>
         </div>
       </div>

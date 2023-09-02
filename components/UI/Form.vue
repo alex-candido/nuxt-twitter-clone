@@ -11,8 +11,6 @@ import useLoginModal from '../../services/useLoginModal'
 import useRegisterModal from '../../services/useRegisterModal'
 import { usePostsStore } from '../../store/posts'
 import { useToastStore } from '../../store/toast'
-const { onOpen } = useToastStore()
-const { data: currentUser } = await useCurrentUser()
 
 const props = defineProps({
   placeholder: {
@@ -32,6 +30,10 @@ const props = defineProps({
     default: false,
   },
 })
+
+
+const { onOpen } = useToastStore()
+const { data: currentUser } = await useCurrentUser()
 
 const { setCurrentPosts, setCurrentPost } = usePostsStore()
 await setCurrentPost({postId: props.postId})

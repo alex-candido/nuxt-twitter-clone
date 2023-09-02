@@ -83,13 +83,17 @@ const toggleLike = async () => {
   await setCurrentPost({ postId: props.data.id })
 }
 
-const goToUser = (event: any) => {
+const goToUser = (event: Event) => {
   event.stopPropagation()
-  router.push(`/users/${props.data.id}`)
+
+  const url = `/users/${props.data.user.id}`
+
+  router.push(url)
 }
 
 const goToPost = (event: any) => {
   event.stopPropagation()
+
   router.push(`/posts/${props.data.id}`)
 }
 

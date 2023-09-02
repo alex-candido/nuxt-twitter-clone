@@ -19,9 +19,7 @@ export default defineEventHandler(async (event) => {
       currentPosts = await getPostsByUserId(userId)
     }
 
-    return {
-      currentPosts,
-    }
+    return currentPosts
   } catch (error) {
     return sendError(
       event,

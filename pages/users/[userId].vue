@@ -5,7 +5,6 @@ import { useUserStore } from '../../store/user';
 import { CurrentUser } from '../../types/user';
 
 const router = useRouter()
-// const route = useRoute()
 const { setUser } = useUserStore()
 const { getUser: fetchedUser } = storeToRefs(useUserStore())
 

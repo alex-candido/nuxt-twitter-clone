@@ -24,7 +24,6 @@ onBeforeMount(async () => {
   }
 })
 
-console.log(router.currentRoute.value.params.postId)
 </script>
 <template>
   <div>

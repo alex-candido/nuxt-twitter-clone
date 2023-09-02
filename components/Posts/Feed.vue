@@ -5,7 +5,9 @@
 import { storeToRefs } from 'pinia';
 import { usePostsStore } from '../../store/posts';
 import { CurrentPost } from '../../types/post';
-const { getCurrentPosts } = storeToRefs(usePostsStore())
+const { setCurrentUserPosts, setCurrentPosts, resetCurrentPosts } =
+  usePostsStore()
+const { getCurrentPosts, getCurrentUserPosts } = storeToRefs(usePostsStore())
 
 const props = defineProps({
   userId: {
@@ -16,22 +18,51 @@ const props = defineProps({
 
 const currentPosts = ref([] as CurrentPost[] | null)
 
-onMounted(() => {
-  watchEffect(() => {
-    if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-      currentPosts.value = getCurrentPosts.value
-    }
-  })
+// watchEffect(async () => {
+//   if (props.userId) {
+//       await resetCurrentPosts()
+//       await setCurrentUserPosts({userId: props.userId})
+//       currentPosts.value = getCurrentUserPosts.value
+//   } else {
+
+//     await setCurrentPosts()
+//   }
+
+// })
+
+// onMounted(async() => {
+//   if (props.userId) {
+//       await setCurrentUserPosts({userId: props.userId})
+//       currentPosts.value = getCurrentUserPosts.value
+//   }
+// })
+
+watchEffect(async () => {
+  if (props.userId) {
+    resetCurrentPosts()
+    await setCurrentUserPosts({ userId: props.userId })
+    currentPosts.value = getCurrentUserPosts.value
+  }
+
+  if (!props.userId){
+    await setCurrentPosts()
+  }
+
+  if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
+    currentPosts.value = getCurrentPosts.value
+  }
 })
 
-watch(
-  () => currentPosts.value,
-  () => {
-    if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-      currentPosts.value = getCurrentPosts.value
-    }
-  },
-)
+onBeforeMount(async () => {
+  if (props.userId) {
+    await setCurrentUserPosts({ userId: props.userId })
+    currentPosts.value = getCurrentUserPosts.value
+  }
+
+  if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
+    currentPosts.value = getCurrentPosts.value
+  }
+})
 </script>
 <template>
   <div

@@ -19,16 +19,17 @@ const currentUser = ref({} as CurrentUser | null)
 
 watchEffect(async () => {
   if (props.userId) {
-    await setUser({ userId: props.userId })
+    await setUser({ userId: props.userId as string })
     currentUser.value = fetchedUser.value
   }
 })
 
-onMounted( () => {
-  console.log('entrou')
+onBeforeMount(async() => {
+  if (props.userId) {
+    await setUser({ userId: props.userId as string })
+    currentUser.value = fetchedUser.value
+  }
 })
-// await setUser({ userId: props.userId })
-// currentUser.value = fetchedUser.value
 
 </script>
 <template>

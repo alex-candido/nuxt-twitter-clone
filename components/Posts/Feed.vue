@@ -18,25 +18,6 @@ const props = defineProps({
 
 const currentPosts = ref([] as CurrentPost[] | null)
 
-// watchEffect(async () => {
-//   if (props.userId) {
-//       await resetCurrentPosts()
-//       await setCurrentUserPosts({userId: props.userId})
-//       currentPosts.value = getCurrentUserPosts.value
-//   } else {
-
-//     await setCurrentPosts()
-//   }
-
-// })
-
-// onMounted(async() => {
-//   if (props.userId) {
-//       await setCurrentUserPosts({userId: props.userId})
-//       currentPosts.value = getCurrentUserPosts.value
-//   }
-// })
-
 watchEffect(async () => {
   if (props.userId) {
     resetCurrentPosts()
@@ -44,7 +25,7 @@ watchEffect(async () => {
     currentPosts.value = getCurrentUserPosts.value
   }
 
-  if (!props.userId){
+  if (!props.userId) {
     await setCurrentPosts()
   }
 
@@ -53,15 +34,17 @@ watchEffect(async () => {
   }
 })
 
-onBeforeMount(async () => {
-  if (props.userId) {
-    await setCurrentUserPosts({ userId: props.userId })
-    currentPosts.value = getCurrentUserPosts.value
-  }
+onBeforeMount(() => {
+  watchEffect(async () => {
+    if (props.userId) {
+      await setCurrentUserPosts({ userId: props.userId })
+      currentPosts.value = getCurrentUserPosts.value
+    }
 
-  if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-    currentPosts.value = getCurrentPosts.value
-  }
+    if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
+      currentPosts.value = getCurrentPosts.value
+    }
+  })
 })
 </script>
 <template>

@@ -1,10 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable require-await -->
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { format } from 'date-fns'
 import { storeToRefs } from 'pinia'
+import useSetFollow from '../../composables/useSetFollow'
 import useEditModal from '../../services/useEditModal'
+import useLoginModal from '../../services/useLoginModal'
 import { useUserStore } from '../../store/user'
 import { CurrentUser } from '../../types/user'
 
@@ -15,8 +19,10 @@ const props = defineProps({
   },
 })
 
-const { setUser } = useUserStore()
-const { getUser: fetchedUser, getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+const { setUser, setCurrentuser } = useUserStore()
+const { getUser: fetchedUser, getCurrenUser: isCurrentUser } = storeToRefs(
+  useUserStore(),
+)
 
 const currentUser = ref({} as CurrentUser | null)
 
@@ -34,14 +40,61 @@ onBeforeMount(async () => {
   }
 })
 
-const createdAt = computed(() => {
-  const createdAt = fetchedUser.value?.createdAt as string | number | Date
-  return format(new Date(createdAt), 'MMMM yyyy' )
+const follow = async () => {
+  await useSetFollow({
+    userId: props.userId,
+    method: 'POST',
+    currentUser: isCurrentUser.value,
+  })
+  await setCurrentuser()
+  await setUser({ userId: props.userId as string })
+}
+
+const unFollow = async () => {
+  await useSetFollow({
+    userId: props.userId,
+    method: 'DELETE',
+    currentUser: isCurrentUser.value,
+  })
+  await setCurrentuser()
+  await setUser({ userId: props.userId as string })
+}
+
+const isFollowing = computed(() => {
+  const list = currentUser.value?.followingIds || []
+  if (props.userId){
+    return list.includes(props.userId)
+  }
 })
 
-const toggleFollow = () => {
-  return console.log('toggleFollow')
+watchEffect(async () => {
+  if (props.userId) {
+    console.log(isFollowing.value)
+  }
+})
+
+const toggleFollow = async () => {
+  if (isFollowing.value) {
+    unFollow()
+  } else {
+    follow()
+  }
 }
+
+const onFollow = async (event: Event) => {
+  event.stopPropagation()
+
+  if (!isCurrentUser.value?.id) {
+    return useLoginModal.onOpen()
+  }
+
+  await toggleFollow()
+}
+
+const createdAt = computed(() => {
+  const createdAt = fetchedUser.value?.createdAt as string | number | Date
+  return format(new Date(createdAt), 'MMMM yyyy')
+})
 </script>
 <template>
   <div class="border-b-[1px] border-neutral-800 pb-4">
@@ -62,7 +115,7 @@ const toggleFollow = () => {
         }"
         :secondary="false"
         :outline="false"
-        @click="toggleFollow"
+        @click="onFollow"
       />
     </div>
     <div class="mt-8 px-4">

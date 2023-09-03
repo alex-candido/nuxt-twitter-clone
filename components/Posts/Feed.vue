@@ -19,7 +19,7 @@ const props = defineProps({
 const currentPosts = ref([] as CurrentPost[] | null)
 
 watchEffect(async () => {
-  if (props.userId) {
+  if (getCurrentUserPosts.value) {
     resetCurrentPosts()
     await setCurrentUserPosts({ userId: props.userId })
     currentPosts.value = getCurrentUserPosts.value

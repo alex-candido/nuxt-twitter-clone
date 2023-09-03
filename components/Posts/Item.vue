@@ -37,6 +37,10 @@ const { setCurrentuser } = useUserStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
+onMounted(async () => {
+  await setCurrentPost({ postId: props.data.id })
+})
+
 const likePost = async () => {
   await useSetLike({
     postId: props.data.id,
@@ -115,9 +119,6 @@ const createdAt = computed(() => {
   return formatDistanceToNowStrict(new Date(props.data.createdAt))
 })
 
-onMounted(async () => {
-  await setCurrentPost({ postId: props.data.id })
-})
 </script>
 <template>
   <div

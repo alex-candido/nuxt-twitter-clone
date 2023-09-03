@@ -26,7 +26,7 @@ onBeforeMount(async() => {
 </script>
 <template>
   <div>
-    <UIHeader :show-back-arrow="true" :label="currentUser?.name" />
+    <UIHeader :show-back-arrow="true" :label="fetchedUser?.name" />
     <UsersHero :user-id="router.currentRoute.value.params.userId as string" />
     <UsersBio :user-id="router.currentRoute.value.params.userId as string" />
     <PostsFeed :user-id="router.currentRoute.value.params.userId as string" />

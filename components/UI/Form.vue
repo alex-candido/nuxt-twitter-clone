@@ -6,15 +6,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import useCurrentUser from '../../composables/useCurrentUser'
-import usePost from '../../composables/usePost'
-import usePosts from '../../composables/usePosts'
 import useSetPost from '../../composables/useSetPost'
 import useLoginModal from '../../services/useLoginModal'
 import useRegisterModal from '../../services/useRegisterModal'
 import { usePostsStore } from '../../store/posts'
 import { useToastStore } from '../../store/toast'
-const { onOpen } = useToastStore()
-const { data: currentUser } = await useCurrentUser()
 
 const props = defineProps({
   placeholder: {
@@ -35,9 +31,12 @@ const props = defineProps({
   },
 })
 
-const { setCurrentPosts } = usePostsStore()
-const { execute: mutatePosts } = await usePosts()
-const { execute: mutatePost } = await usePost(props.postId)
+
+const { onOpen } = useToastStore()
+const { data: currentUser } = await useCurrentUser()
+
+const { setCurrentPosts, setCurrentPost } = usePostsStore()
+await setCurrentPost({postId: props.postId})
 
 const currentPost = reactive({
   text: '',
@@ -61,12 +60,11 @@ const onSubmit = async () => {
 
     currentPost.text = ''
     await setCurrentPosts()
-    await mutatePosts()
-    await mutatePost()
+    await setCurrentPost({postId: props.postId})
 
-    if (props.details) {
-      location.reload()
-    }
+    // if (props.details) {
+    //   location.reload()
+    // }
   } catch (error) {
     if (error instanceof Error) {
       currentPost.errorMsg = error.message

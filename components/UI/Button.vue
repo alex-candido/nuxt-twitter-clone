@@ -48,7 +48,7 @@ const buttonClasses = computed(() => {
   return [
     props.secondary ? 'bg-white' : 'bg-sky-500',
     props.secondary ? 'text-black' : 'text-white',
-    props.secondary ? 'border-black' : 'border-sky-500',
+    props.secondary ? 'border-neutral-600' : 'border-sky-500',
     props.large ? 'text-xl' : 'text-md',
     props.large ? 'px-5' : 'px-4',
     props.large ? 'py-3' : 'py-2',

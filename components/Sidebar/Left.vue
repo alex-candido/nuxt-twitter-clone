@@ -4,8 +4,9 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '../../store/user';
-const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
+
 const { signOut } = useAuth()
+const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
 const items = [
   {
@@ -31,8 +32,6 @@ const items = [
   },
 ]
 
-console.log(isCurrentUser.value?.id)
-
 </script>
 <template>
   <div class="col-span-1 h-screen pr-4 md:pr-6 dark:bg-dim-900">
@@ -46,11 +45,11 @@ console.log(isCurrentUser.value?.id)
           :label="item.label"
           :icon="item.icon"
           :auth="item.auth"
-          :alert="item.alert"
+          :alert="item?.alert"
           :size="item.size"
         />
         <SidebarItem
-          v-if="isCurrentUser"
+          v-if="isCurrentUser?.id"
           icon="bx:log-out"
           label="Logout"
           size="1.3rem"

@@ -9,7 +9,7 @@ export interface CurrentUser {
   coverImage: string | null;
   profileImage: string | null
   hashedPassword: string | null
-  createdAt: string
+  createdAt: string | Date
   updatedAt: string
   followingIds: string[]
   followersIds: string[]

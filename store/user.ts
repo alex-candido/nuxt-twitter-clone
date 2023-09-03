@@ -3,17 +3,27 @@ import { CurrentUser } from '../types/user'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({
+    isLoading: ref(false as boolean),
     isUser: ref({} as CurrentUser | null),
+    isCurrentUser: ref({} as CurrentUser | null),
   }),
   getters: {
     getCurrenUser(state) {
+      return state.isCurrentUser
+    },
+    getUser(state) {
       return state.isUser
     },
   },
   actions: {
     async setCurrentuser() {
       const { data: currentUser } = await useCurrentUser()
-      this.isUser = currentUser
+      this.isCurrentUser = currentUser
+    },
+    async setUser({ userId }: { userId: string | null | undefined }) {
+      const { data: fetchedUser, pending } = await useUser({ userId })
+      this.isUser = fetchedUser
+      this.isLoading = pending.value
     },
   },
 })

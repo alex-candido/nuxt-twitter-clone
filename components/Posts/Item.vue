@@ -10,9 +10,9 @@
 <script lang="ts" setup>
 import { formatDistanceToNowStrict } from 'date-fns'
 import { storeToRefs } from 'pinia'
+
 import useSetLike from '../../composables/useSetLike'
 import useLoginModal from '../../services/useLoginModal'
-import { usePostStore } from '../../store/post'
 import { usePostsStore } from '../../store/posts'
 import { useUserStore } from '../../store/user'
 
@@ -27,27 +27,47 @@ const props = defineProps({
   },
   details: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const router = useRouter()
-const { setCurrentPosts } = usePostsStore()
-const { setCurrentPost } = usePostStore()
+const { setCurrentPosts, setCurrentPost } = usePostsStore()
+const { setCurrentuser } = useUserStore()
+const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
 
+onMounted(async () => {
+  await setCurrentPost({ postId: props.data.id })
+})
+
 const likePost = async () => {
-  await useSetLike({postId: props.data.id, method:'POST', currentUser: isCurrentUser.value})
+  await useSetLike({
+    postId: props.data.id,
+    method: 'POST',
+    currentUser: isCurrentUser.value,
+  })
   await setCurrentPosts()
+  await setCurrentPost({ postId: props.data.id })
+  await setCurrentuser()
 }
 
 const unlikePost = async () => {
-  await useSetLike({postId: props.data.id, method:'DELETE', currentUser: isCurrentUser.value})
+  await useSetLike({
+    postId: props.data.id,
+    method: 'DELETE',
+    currentUser: isCurrentUser.value,
+  })
   await setCurrentPosts()
+  await setCurrentPost({ postId: props.data.id })
+  await setCurrentuser()
 }
 
 const hasLiked = computed(() => {
-  const list = props.data.likedIds || []
+  const list = props.details
+    ? currentPost.value?.likedIds || []
+    : props.data.likedIds
+
   if (isCurrentUser.value?.id) {
     return list.includes(isCurrentUser.value?.id)
   }
@@ -64,31 +84,31 @@ const toggleLike = async () => {
   }
 
   await setCurrentPosts()
-  await setCurrentPost(props.data.id)
+  await setCurrentPost({ postId: props.data.id })
 }
 
-const goToUser = (event: any) => {
+const goToUser = (event: Event) => {
   event.stopPropagation()
-  router.push(`/users/${props.data.id}`)
+
+  const url = `/users/${props.data.user.id}`
+
+  router.push(url)
 }
 
 const goToPost = (event: any) => {
   event.stopPropagation()
+
   router.push(`/posts/${props.data.id}`)
 }
 
 const onLike = async (event: Event) => {
   event.stopPropagation()
 
-  if (!isCurrentUser) {
+  if (!isCurrentUser.value?.id) {
     return useLoginModal.onOpen()
   }
 
   await toggleLike()
-
-  if (props.details) {
-    location.reload()
-  }
 }
 
 const createdAt = computed(() => {
@@ -98,12 +118,6 @@ const createdAt = computed(() => {
 
   return formatDistanceToNowStrict(new Date(props.data.createdAt))
 })
-
-onMounted(async () => {
-  await setCurrentPost(props.data.id)
-})
-
-console.log(props.data.user)
 
 </script>
 <template>
@@ -150,13 +164,15 @@ console.log(props.data.user)
             <Icon
               :name="
                 computed(() => {
-                  return hasLiked ? 'bi:heart-fill' : 'bi:heart'
+                  return hasLiked && props.data.id
+                    ? 'bi:heart-fill'
+                    : 'bi:heart'
                 }).value
               "
               size="1.3rem"
               :color="
                 computed(() => {
-                  return hasLiked ? 'red' : ''
+                  return hasLiked && props.data.id ? 'red' : ''
                 }).value
               "
             />

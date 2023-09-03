@@ -17,7 +17,7 @@ const props = defineProps({
 
 const router = useRouter()
 
-const onClick = (event: any) => {
+const goToUser = (event: any) => {
   event.stopPropagation()
 
   const url = `/users/${props.userId}`
@@ -46,7 +46,7 @@ const onClick = (event: any) => {
       class="absolute inset-0 object-cover w-full h-full"
       alt="Avatar"
       :src="'/images/placeholder.png'"
-      @click="onClick"
+      @click="goToUser"
     />
   </div>
 </template>

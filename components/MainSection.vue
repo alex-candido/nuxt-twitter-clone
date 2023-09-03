@@ -1,5 +1,10 @@
+<!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useUserStore } from '../store/user';
+const { setCurrentuser } = useUserStore()
+await setCurrentuser()
+</script>
 <template>
   <div class="min-h-full dark:bg-dim-900">
     <div class="container h-full mx-auto xl:px-30 max-w-6xl">

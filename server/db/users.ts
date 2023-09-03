@@ -9,6 +9,16 @@ export interface UserDataProps {
   name: string | null
 }
 
+export interface UpdatedUserFollowingProps {
+  userId: string
+  updatedFollowingIds: string[]
+}
+
+export interface UpdatedUserFollowersProps {
+  userId: string
+  updatedFollowersIds: string[]
+}
+
 export const createUser = async (userData: UserDataProps): Promise<User> => {
   const finalUserData = {
     ...userData,
@@ -65,9 +75,7 @@ export const getAllUsers = async (): Promise<any> => {
   return users
 }
 
-export const updateIsNotificationUser = async (
-  userId: string,
-): Promise<any> => {
+export const notificationUser = async (userId: string): Promise<any> => {
   const user = await prisma.user.update({
     where: {
       id: userId,
@@ -79,6 +87,42 @@ export const updateIsNotificationUser = async (
 
   if (!user) {
     console.log('Not found users')
+  }
+  return user
+}
+
+export const updatedUserFollowing = async (
+  userData: UpdatedUserFollowingProps,
+): Promise<any> => {
+  const user = await prisma.user.update({
+    where: {
+      id: userData.userId,
+    },
+    data: {
+      followingIds: userData.updatedFollowingIds,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found user')
+  }
+  return user
+}
+
+export const updatedUserFollowers = async (
+  userData: UpdatedUserFollowersProps,
+): Promise<any> => {
+  const user = await prisma.user.update({
+    where: {
+      id: userData.userId,
+    },
+    data: {
+      followersIds: userData.updatedFollowersIds,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found user')
   }
   return user
 }

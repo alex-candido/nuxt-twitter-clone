@@ -1,38 +1,45 @@
 <!-- eslint-disable import/order -->
 <!-- eslint-disable prettier/prettier -->
 <script lang="ts" setup>
-import usePost from '../../composables/usePost';
+import { storeToRefs } from 'pinia';
+import { usePostsStore } from '../../store/posts';
 
 const router = useRouter()
-const { postId } = router.currentRoute.value.params
-const currentPostid = postId as string
+const { setCurrentPost } = usePostsStore()
+const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 
-const { data: fetchedPost, pending: isLoading } = await usePost(currentPostid)
+watchEffect(async () => {
+  if(router.currentRoute.value.params.postId){
+    await setCurrentPost({
+      postId: router.currentRoute.value.params.postId as string,
+    })
+  }
+})
+
+onBeforeMount(async () => {
+  if (router.currentRoute.value.params.postId) {
+    await setCurrentPost({
+      postId: router.currentRoute.value.params.postId as string,
+    })
+  }
+})
 
 </script>
 <template>
   <div>
-    <div
-      v-if="isLoading && !fetchedPost"
-      class="flex justify-center items-start h-full pt-32"
-    >
-      <UISpinner />
-    </div>
-    <div v-else>
-      <UIHeader show-back-arrow label="Tweet" />
+    <UIHeader show-back-arrow label="Tweet" />
 
-      <PostsItem
-        v-if="postId"
-        :data="fetchedPost as Record<string, any>"
-        :details="true"
-      />
-      <UIForm
-        :post-id="currentPostid"
-        :is-comment="true"
-        placeholder="Tweet your reply"
-        :details="true"
-      />
-      <PostsCommentFeed v-if="fetchedPost" :comments="fetchedPost?.comments" />
-    </div>
+    <PostsItem
+      v-if="router.currentRoute.value.params.postId"
+      :data="currentPost as Record<string, any>"
+      :details="true"
+    />
+    <UIForm
+      :post-id="router.currentRoute.value.params.postId as string"
+      :is-comment="true"
+      placeholder="Tweet your reply"
+      :details="true"
+    />
+    <PostsCommentFeed v-if="currentPost" :comments="currentPost?.comments" />
   </div>
 </template>

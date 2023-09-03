@@ -1,11 +1,9 @@
-const useUserPosts = async ({
-  userId,
-}: {
-  userId: string | null | undefined
-}) => {
+const useNotifications = async (userId: string) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
-    `/api/posts/user?userId=${userId}`,
-    { method: 'GET' },
+    `/api/notifications/${userId}`,
+    {
+      method: 'GET',
+    },
   )
 
   return {
@@ -18,4 +16,4 @@ const useUserPosts = async ({
   }
 }
 
-export default useUserPosts
+export default useNotifications

@@ -1,5 +1,11 @@
 // import { createNotification } from '../db/notifications'
-// import { getUserById, notificationUser, updatedUser } from '../db/users'
+import { createNotification } from '../db/notifications'
+import {
+  getUserById,
+  notificationUser,
+  updatedUserFollowers,
+  updatedUserFollowing,
+} from '../db/users'
 
 export default defineEventHandler(async (event) => {
   const method = event.method
@@ -13,41 +19,67 @@ export default defineEventHandler(async (event) => {
 
   const { userId, isCurrentUser } = await readBody(event)
 
-  // const user = await getUserById(userId)
+  const userFollowing = await getUserById(isCurrentUser.id)
 
-  // let updatedFollowingIds = [...(user.followingIds || [])]
+  const userFollower = await getUserById(userId)
 
-  // const notificationData = {
-  //   userId: user.id,
-  //   statusMessage: 'Someone followed your profile!',
-  // }
+  let updatedFollowingIds = [...(userFollowing?.followingIds || [])]
+  let updatedFollowersIds = [...(userFollower?.followersIds || [])]
+
+  const notificationData = {
+    userId: userFollower.id,
+    statusMessage: 'Someone followed your profile!',
+  }
 
   try {
-    // if (method === 'POST') {
-    //   updatedFollowingIds.push(isCurrentUser.id)
+    if (method === 'POST') {
+      updatedFollowingIds.push(userId)
+      updatedFollowersIds.push(isCurrentUser.id)
 
-    //   if (user.id) {
-    //     await createNotification(notificationData)
-    //     await notificationUser(user.id)
-    //   }
-    // }
+      if (userFollower.id) {
+        await createNotification(notificationData)
+        await notificationUser(userFollower.id)
+      }
+    }
 
-    // if (method === 'DELETE') {
-    //   updatedFollowingIds = updatedFollowingIds.filter(
-    //     (followId) => followId !== isCurrentUser?.id,
-    //   )
-    // }
+    if (method === 'DELETE') {
+      updatedFollowingIds = updatedFollowingIds.filter(
+        (followingId) => followingId !== userId,
+      )
+      updatedFollowersIds = updatedFollowersIds.filter(
+        (followersId) => followersId !== isCurrentUser.id,
+      )
+    }
 
-    // const userData = {
-    //   userId,
-    //   updatedFollowingIds,
-    // }
+    const userFollowingData = {
+      userId: isCurrentUser.id,
+      updatedFollowingIds,
+    }
 
-    // const isUpdatedUser = await updatedUser(userData)
+    const userFollowersData = {
+      userId,
+      updatedFollowersIds,
+    }
 
-    // return { method, userId, isCurrentUser, isUpdatedUser }
-    console.log({ userId, method, isCurrentUser })
-    return { userId, isCurrentUser }
+    const isUpdatedUserFollowing = await updatedUserFollowing(userFollowingData)
+
+    const isUpdatedUserFollowers = await updatedUserFollowers(userFollowersData)
+
+    console.log({
+      method,
+      userId,
+      isCurrentUser,
+      isUpdatedUserFollowing,
+      isUpdatedUserFollowers,
+    })
+
+    return {
+      method,
+      userId,
+      isCurrentUser,
+      isUpdatedUserFollowing,
+      isUpdatedUserFollowers,
+    }
   } catch (error) {
     return sendError(
       event,

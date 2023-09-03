@@ -15,7 +15,6 @@ const { getNotifications: fetchedNotifications } = storeToRefs(
 watchEffect(async () => {
   if (isCurrentUser.value?.id) {
     await setNotifications(isCurrentUser.value?.id)
-    console.log('valor')
   }
 })
 </script>

@@ -61,7 +61,7 @@ const unFollow = async () => {
 }
 
 const isFollowing = computed(() => {
-  const list = currentUser.value?.followingIds || []
+  const list = isCurrentUser.value?.followingIds || []
   if (props.userId){
     return list.includes(props.userId)
   }
@@ -69,6 +69,7 @@ const isFollowing = computed(() => {
 
 watchEffect(async () => {
   if (props.userId) {
+    console.log(isCurrentUser.value)
     console.log(isFollowing.value)
   }
 })
@@ -108,13 +109,13 @@ const createdAt = computed(() => {
       <UIButton
         v-else
         class="button"
-        :label="false ? 'Unfollow' : 'Follow'"
-        :class="{
-          'button-secondary': true,
-          'button-outline': true,
-        }"
-        :secondary="false"
-        :outline="false"
+        :label="
+          computed(() => {
+            return isFollowing ? 'Unfollow' : 'Follow'
+          }).value
+        "
+        :secondary="!isFollowing"
+        :outline="isFollowing"
         @click="onFollow"
       />
     </div>

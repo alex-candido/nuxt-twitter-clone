@@ -65,14 +65,6 @@ export default defineEventHandler(async (event) => {
 
     const isUpdatedUserFollowers = await updatedUserFollowers(userFollowersData)
 
-    console.log({
-      method,
-      userId,
-      isCurrentUser,
-      isUpdatedUserFollowing,
-      isUpdatedUserFollowers,
-    })
-
     return {
       method,
       userId,

@@ -67,13 +67,6 @@ const isFollowing = computed(() => {
   }
 })
 
-watchEffect(async () => {
-  if (props.userId) {
-    console.log(isCurrentUser.value)
-    console.log(isFollowing.value)
-  }
-})
-
 const toggleFollow = async () => {
   if (isFollowing.value) {
     unFollow()

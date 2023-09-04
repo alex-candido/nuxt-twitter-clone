@@ -7,8 +7,8 @@
 import useEditModal from '../../services/useEditModal';
 
 const currentEdit = reactive({
-  profileImage: '',
-  coverImage: '',
+  profileImage: [] as (Blob | null)[],
+  coverImage: [] as (Blob | null)[],
   name: '',
   username: '',
   bio: '',
@@ -20,6 +20,8 @@ const currentEdit = reactive({
 const onSubmit = async () => {
   try {
     currentEdit.isLoading = true
+
+    console.log(currentEdit.profileImage[0])
 
     useEditModal.onClose()
   } catch (error) {

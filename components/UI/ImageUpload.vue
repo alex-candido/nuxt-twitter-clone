@@ -1,5 +1,3 @@
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { useDropzone } from 'vue3-dropzone';
 

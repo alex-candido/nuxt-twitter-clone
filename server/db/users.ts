@@ -14,6 +14,15 @@ export interface UpdatedUserFollowingProps {
   updatedFollowingIds: string[]
 }
 
+export interface UpdatedUserEditProps {
+  userId: string
+  name: string
+  username: string
+  bio: string
+  profileImage: string
+  coverImage: string
+}
+
 export interface UpdatedUserFollowersProps {
   userId: string
   updatedFollowersIds: string[]
@@ -118,6 +127,28 @@ export const updatedUserFollowers = async (
     },
     data: {
       followersIds: userData.updatedFollowersIds,
+    },
+  })
+
+  if (!user) {
+    console.log('Not found user')
+  }
+  return user
+}
+
+export const updatedUserEdit = async (
+  userData: UpdatedUserEditProps,
+): Promise<any> => {
+  const user = await prisma.user.update({
+    where: {
+      id: userData.userId,
+    },
+    data: {
+      name: userData.name,
+      username: userData.username,
+      bio: userData.bio,
+      profileImage: userData.profileImage,
+      coverImage: userData.coverImage,
     },
   })
 

@@ -4,11 +4,12 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import useEdit from '../../composables/useEdit';
 import useEditModal from '../../services/useEditModal';
 
 const currentEdit = reactive({
-  profileImage: [] as (Blob | null)[],
-  coverImage: [] as (Blob | null)[],
+  profileImage: [] as any[],
+  coverImage: [] as any[],
   name: '',
   username: '',
   bio: '',
@@ -21,7 +22,13 @@ const onSubmit = async () => {
   try {
     currentEdit.isLoading = true
 
-    console.log(currentEdit.profileImage[0])
+    await useEdit({
+      name: currentEdit.name,
+      username: currentEdit.username,
+      bio: currentEdit.bio,
+      profileImage: currentEdit.profileImage,
+      coverImage: currentEdit.coverImage,
+    })
 
     useEditModal.onClose()
   } catch (error) {

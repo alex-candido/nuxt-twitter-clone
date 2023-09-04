@@ -5,6 +5,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  profileImage: {
+    type: String as PropType<string | null | undefined>,
+    required: true,
+  },
   isLarge: {
     type: Boolean,
     default: false,
@@ -45,7 +49,7 @@ const goToUser = (event: any) => {
       style="object-fit: cover; border-radius: 100%"
       class="absolute inset-0 object-cover w-full h-full"
       alt="Avatar"
-      :src="'/images/placeholder.png'"
+      :src="profileImage || '/images/placeholder.png'"
       @click="goToUser"
     />
   </div>

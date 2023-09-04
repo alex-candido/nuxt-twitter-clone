@@ -3,7 +3,7 @@ import { useDropzone } from 'vue3-dropzone';
 
 const props = defineProps({
   modelValue: {
-    type: [] as PropType<(Blob | null)[]>,
+    type: Array as PropType<(Blob | null)[]>,
     required: true,
   },
   label: {
@@ -24,7 +24,7 @@ const selectedFile = ref(<Blob | null>null)
 const inputImageUrl = ref(<string | ArrayBuffer | null | undefined>null)
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: Array<any>): void
+  (e: 'update:modelValue', value: (Blob | null)[]): void
 }>()
 
 function handleChange() {
@@ -60,7 +60,7 @@ const { getRootProps, getInputProps,  } = useDropzone({
     v-bind="getRootProps()"
     class="w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700 cursor-pointer hover:opacity-80"
   >
-    <input v-bind="getInputProps()"/>
+    <input v-bind="getInputProps()" />
     <template v-if="inputImageUrl">
       <div class="flex items-center justify-center">
         <nuxt-img :src="(inputImageUrl as string | undefined)" height="100" width="100" alt="Uploaded image" />

@@ -43,7 +43,7 @@ function handleInput(event: Event) {
       {{ props.label }}
     </label>
     <input
-      :value="props.modelValue"
+      :v-model="props.modelValue"
       :type="props.type"
       :placeholder="props.placeholder"
       :disabled="props.disabled"

@@ -1,12 +1,14 @@
 interface EditPayloadInterface {
+  userId: string
   name: string
   username: string
   bio: string
-  profileImage: Array<any>
-  coverImage: Array<any>
+  profileImage: any[]
+  coverImage: any[]
 }
 
 const useEdit = async ({
+  userId,
   name,
   username,
   bio,
@@ -15,6 +17,7 @@ const useEdit = async ({
 }: EditPayloadInterface) => {
   const form = new FormData()
 
+  form.append('userId', userId)
   form.append('name', name)
   form.append('username', username)
   form.append('bio', bio)

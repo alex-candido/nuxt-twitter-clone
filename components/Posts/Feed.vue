@@ -5,7 +5,7 @@
 import { storeToRefs } from 'pinia';
 import { usePostsStore } from '../../store/posts';
 import { CurrentPost } from '../../types/post';
-const { setCurrentUserPosts, setCurrentPosts, resetCurrentPosts } =
+const { setCurrentUserPosts, setCurrentPosts } =
   usePostsStore()
 const { getCurrentPosts, getCurrentUserPosts } = storeToRefs(usePostsStore())
 
@@ -19,11 +19,6 @@ const props = defineProps({
 const currentPosts = ref([] as CurrentPost[] | null)
 
 watchEffect(async () => {
-  if (getCurrentUserPosts.value) {
-    resetCurrentPosts()
-    await setCurrentUserPosts({ userId: props.userId })
-    currentPosts.value = getCurrentUserPosts.value
-  }
 
   if (!props.userId) {
     await setCurrentPosts()
@@ -49,12 +44,12 @@ onBeforeMount(() => {
 </script>
 <template>
   <div
-    v-if="currentPosts?.length === 0"
+    v-show="currentPosts?.length === 0"
     class="text-neutral-600 text-center p-6 text-sm"
   >
     No Posts
   </div>
-  <div v-else>
+  <div v-if="currentPosts?.length" v-show="currentPosts?.length > 1">
     <div
       v-for="(post, index) in currentPosts"
       :key="index"

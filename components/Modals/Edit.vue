@@ -4,8 +4,13 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia';
 import useEdit from '../../composables/useEdit';
 import useEditModal from '../../services/useEditModal';
+import { useUserStore } from '../../store/user';
+
+const { setUser } = useUserStore()
+const { getCurrenUser: isCurrentUser  } = storeToRefs(useUserStore())
 
 const currentEdit = reactive({
   profileImage: [] as any[],
@@ -22,15 +27,18 @@ const onSubmit = async () => {
   try {
     currentEdit.isLoading = true
 
-    await useEdit({
+    console.log(await useEdit({
+      userId: isCurrentUser.value?.id as string,
       name: currentEdit.name,
       username: currentEdit.username,
       bio: currentEdit.bio,
       profileImage: currentEdit.profileImage,
       coverImage: currentEdit.coverImage,
-    })
+    }))
 
+    await setUser({ userId: isCurrentUser.value?.id })
     useEditModal.onClose()
+    location.reload()
   } catch (error) {
     if (error instanceof Error) {
       currentEdit.errorMsg = error.message

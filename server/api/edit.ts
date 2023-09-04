@@ -110,7 +110,7 @@ export default defineEventHandler(async (event) => {
 
     console.log({ method, updatedUser })
 
-    return { method, updatedUser }
+    return updatedUser
   } catch (error) {
     return sendError(
       event,

@@ -5,52 +5,79 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
-import useEdit from '../../composables/useEdit';
 import useEditModal from '../../services/useEditModal';
 import { useUserStore } from '../../store/user';
 
-const { setUser } = useUserStore()
-const { getCurrenUser: isCurrentUser  } = storeToRefs(useUserStore())
+const { setUser, setUserEdit } = useUserStore()
+const { getCurrenUser: isCurrentUser, getUser: fetchedUser } = storeToRefs(
+  useUserStore(),
+)
 
-const currentEdit = reactive({
-  profileImage: [] as any[],
-  coverImage: [] as any[],
-  name: '',
-  username: '',
-  bio: '',
-  errorMsg: '',
-  successMsg: '',
-  isLoading: false,
-})
+// const currentEdit = reactive({
+//   profileImage: [] as any[],
+//   coverImage: [] as any[],
+//   name: '',
+//   username: '',
+//   bio: '',
+//   errorMsg: '',
+//   successMsg: '',
+//   isLoading: false,
+// })
+
+const profileImage = ref([] as any[])
+const coverImage = ref([] as any[])
+const name = ref('')
+const username = ref('')
+const bio = ref('')
+const errorMsg = ref('')
+const isLoading = ref(false as boolean)
 
 const onSubmit = async () => {
   try {
-    currentEdit.isLoading = true
+    isLoading.value = true
 
-    console.log(await useEdit({
+    await setUserEdit({
       userId: isCurrentUser.value?.id as string,
-      name: currentEdit.name,
-      username: currentEdit.username,
-      bio: currentEdit.bio,
-      profileImage: currentEdit.profileImage,
-      coverImage: currentEdit.coverImage,
-    }))
+      name: name.value,
+      username: username.value,
+      bio: bio.value,
+      profileImage: profileImage.value || [],
+      coverImage: coverImage.value || [],
+    })
+
+    console.log({
+      userId: isCurrentUser.value?.id as string,
+      name: name.value,
+      username: username.value,
+      bio: bio.value,
+      profileImage: profileImage.value,
+      coverImage: coverImage.value,
+    })
 
     await setUser({ userId: isCurrentUser.value?.id })
     useEditModal.onClose()
-    location.reload()
   } catch (error) {
     if (error instanceof Error) {
-      currentEdit.errorMsg = error.message
+      errorMsg.value = error.message
     }
   } finally {
-    currentEdit.isLoading = false
+    isLoading.value = false
   }
 }
+
+watchEffect(() => {
+  if (fetchedUser.value) {
+    name.value = fetchedUser.value.name as string
+    username.value = fetchedUser.value.username as string
+    bio.value = fetchedUser.value.bio as string
+  }
+})
+
+
 </script>
 <template>
   <Modal
-    :disabled="currentEdit.isLoading"
+    :disabled="isLoading"
     :is-open="useEditModal.state.isOpen"
     title="Edit your profile"
     action-label="Save"
@@ -60,30 +87,38 @@ const onSubmit = async () => {
     <template #default>
       <div class="flex flex-col gap-4">
         <UIImageUpload
-          v-model="currentEdit.profileImage"
-          :disabled="currentEdit.isLoading"
+          v-model="profileImage"
+          :value="computed(() => fetchedUser?.profileImage).value as string"
+          :disabled="isLoading"
           label="Upload profile image"
         />
         <UIImageUpload
-          v-model="currentEdit.coverImage"
-          :disabled="currentEdit.isLoading"
+          v-model="coverImage"
+          :value="computed(() => fetchedUser?.coverImage).value as string"
+          :disabled="isLoading"
           label="Upload cover image"
         />
-        <UIInput
-          v-model="currentEdit.name"
-          placeholder="Name"
-          :disabled="currentEdit.isLoading"
-        />
-        <UIInput
-          v-model="currentEdit.username"
-          placeholder="Username"
-          :disabled="currentEdit.isLoading"
-        />
-        <UIInput
-          v-model="currentEdit.bio"
-          placeholder="Bio"
-          :disabled="currentEdit.isLoading"
-        />
+        <div class="w-full">
+          <input
+            v-model="name"
+            :disabled="isLoading"
+            class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
+          />
+        </div>
+        <div class="w-full">
+          <input
+            v-model="username"
+            :disabled="isLoading"
+            class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
+          />
+        </div>
+        <div class="w-full">
+          <input
+            v-model="bio"
+            :disabled="isLoading"
+            class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
+          />
+        </div>
       </div>
     </template>
   </Modal>

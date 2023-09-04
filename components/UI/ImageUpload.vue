@@ -3,7 +3,7 @@ import { useDropzone } from 'vue3-dropzone';
 
 const props = defineProps({
   modelValue: {
-    type: Array as PropType<(Blob | null)[]>,
+    type: Array as PropType<any[]>,
     required: true,
   },
   label: {
@@ -21,6 +21,7 @@ const props = defineProps({
 })
 
 const selectedFile = ref(<Blob | null>null)
+// o Problema é aqui
 const inputImageUrl = ref(<string | ArrayBuffer | null | undefined>null)
 
 const emits = defineEmits<{

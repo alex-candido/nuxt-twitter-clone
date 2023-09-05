@@ -35,18 +35,14 @@ function handleInput(event: Event) {
 
 <template>
   <div class="w-full">
-    <label
-      v-if="props.label"
-      for=""
-      class="text-xl text-white font-semibold mb-2"
-    >
-      {{ props.label }}
+    <label v-if="label" for="" class="text-xl text-white font-semibold mb-2">
+      {{ label }}
     </label>
     <input
-      :value="props.modelValue"
-      :type="props.type"
-      :placeholder="props.placeholder"
-      :disabled="props.disabled"
+      :v-model="modelValue"
+      :type="type"
+      :placeholder="placeholder"
+      :disabled="disabled"
       class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
       @input="handleInput"
     />

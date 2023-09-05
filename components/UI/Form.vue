@@ -88,7 +88,11 @@ const handleSubmit = () => {
   <div class="border-b-[1px] border-neutral-600 px-5 py-2">
     <div v-show="currentUser?.id" class="flex flex-row gap-4">
       <div>
-        <UIAvatar :user-id="currentUser?.id || ''" />
+        <UIAvatar
+          :profile-image="currentUser?.profileImage || ''"
+          image
+          :user-id="currentUser?.id"
+        />
       </div>
       <div class="w-full">
         <textarea

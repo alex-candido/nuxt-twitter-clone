@@ -1,6 +1,15 @@
 import { defineStore } from 'pinia'
 import { CurrentUser } from '../types/user'
 
+interface EditPayloadInterface {
+  userId: string
+  name: string
+  username: string
+  bio: string
+  profileImage?: any[]
+  coverImage?: any[]
+}
+
 export const useUserStore = defineStore('user-store', {
   state: () => ({
     isLoading: ref(false as boolean),
@@ -24,6 +33,23 @@ export const useUserStore = defineStore('user-store', {
       const { data: fetchedUser, pending } = await useUser({ userId })
       this.isUser = fetchedUser
       this.isLoading = pending.value
+    },
+    async setUserEdit({
+      userId,
+      name,
+      username,
+      bio,
+      profileImage,
+      coverImage,
+    }: EditPayloadInterface) {
+      await useEdit({
+        userId: userId as string,
+        name,
+        username,
+        bio,
+        profileImage,
+        coverImage,
+      })
     },
   },
 })

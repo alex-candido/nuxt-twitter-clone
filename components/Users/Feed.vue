@@ -5,9 +5,9 @@
 import { storeToRefs } from 'pinia';
 import { usePostsStore } from '../../store/posts';
 import { CurrentPost } from '../../types/post';
-const { setCurrentUserPosts, setCurrentPosts } =
+const { setCurrentUserPosts } =
   usePostsStore()
-const { getCurrentPosts, getCurrentUserPosts } = storeToRefs(usePostsStore())
+const { getCurrentUserPosts } = storeToRefs(usePostsStore())
 
 const props = defineProps({
   userId: {
@@ -20,12 +20,13 @@ const currentPosts = ref([] as CurrentPost[] | null)
 
 watchEffect(async () => {
 
-  if (!props.userId) {
-    await setCurrentPosts()
-  }
+  if (getCurrentUserPosts.value && getCurrentUserPosts.value.length >= 1) {
+      await setCurrentUserPosts({ userId: props.userId })
+      currentPosts.value = getCurrentUserPosts.value
+    }
 
-  if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-    currentPosts.value = getCurrentPosts.value
+  if (getCurrentUserPosts.value && getCurrentUserPosts.value.length >= 1) {
+    currentPosts.value = getCurrentUserPosts.value
   }
 })
 
@@ -34,10 +35,6 @@ onBeforeMount(() => {
     if (props.userId) {
       await setCurrentUserPosts({ userId: props.userId })
       currentPosts.value = getCurrentUserPosts.value
-    }
-
-    if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-      currentPosts.value = getCurrentPosts.value
     }
   })
 })

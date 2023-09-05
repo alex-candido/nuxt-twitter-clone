@@ -32,7 +32,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { setCurrentPosts, setCurrentPost } = usePostsStore()
+const { setCurrentPosts, setCurrentPost, setCurrentUserPosts } = usePostsStore()
 const { setCurrentuser } = useUserStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
@@ -49,6 +49,7 @@ const likePost = async () => {
   })
   await setCurrentPosts()
   await setCurrentPost({ postId: props.data.id })
+  await setCurrentUserPosts({ userId: props.userId })
   await setCurrentuser()
 }
 
@@ -60,6 +61,7 @@ const unlikePost = async () => {
   })
   await setCurrentPosts()
   await setCurrentPost({ postId: props.data.id })
+  await setCurrentUserPosts({ userId: props.userId })
   await setCurrentuser()
 }
 
@@ -85,6 +87,7 @@ const toggleLike = async () => {
 
   await setCurrentPosts()
   await setCurrentPost({ postId: props.data.id })
+  await setCurrentUserPosts({ userId: props.userId })
 }
 
 const goToUser = (event: Event) => {
@@ -126,7 +129,10 @@ const createdAt = computed(() => {
     @click="goToPost"
   >
     <div class="flex flex-row items-start gap-3">
-      <UIAvatar :user-id="props.data.user.id || ''" />
+      <UIAvatar
+        :profile-image="props.data.user.profileImage || ''"
+        :user-id="props.data.user.id"
+      />
       <div>
         <div class="flex flex-row items-center gap-2">
           <p
@@ -143,12 +149,6 @@ const createdAt = computed(() => {
           </span>
           <span class="text-neutral-500 text-sm">{{ createdAt }}</span>
         </div>
-        <!-- <div class="flex my-5 mr-2 border-1 rounded-2xl">
-          <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            class="w-full rounded-2xl"
-          />
-        </div> -->
         <div class="text-white mt-1">{{ data.body }}</div>
         <div class="flex flex-row items-center mt-3 gap-10">
           <div

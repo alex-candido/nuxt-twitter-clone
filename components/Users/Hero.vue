@@ -35,15 +35,22 @@ onBeforeMount(async() => {
 <template>
   <div>
     <div class="bg-neutral-700 h-44 relative">
-      <nuxt-img
-        v-if="currentUser?.coverImage"
-        :src="currentUser?.coverImage"
-        fill
-        alt="Cover Image"
-        style="object-fit: cover"
-      />
+      <div class="overflow-hidden h-44">
+        <nuxt-img
+          v-if="currentUser?.coverImage"
+          :src="currentUser?.coverImage"
+          fill
+          alt="Cover Image"
+          style="object-fit: cover"
+        />
+      </div>
       <div class="absolute -bottom-16 left-4">
-        <UIAvatar :user-id="userId" is-large has-border />
+        <UIAvatar
+          :profile-image="fetchedUser?.profileImage"
+          :user-id="userId"
+          is-large
+          has-border
+        />
       </div>
     </div>
   </div>

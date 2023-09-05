@@ -13,17 +13,6 @@ const { getCurrenUser: isCurrentUser, getUser: fetchedUser } = storeToRefs(
   useUserStore(),
 )
 
-// const currentEdit = reactive({
-//   profileImage: [] as any[],
-//   coverImage: [] as any[],
-//   name: '',
-//   username: '',
-//   bio: '',
-//   errorMsg: '',
-//   successMsg: '',
-//   isLoading: false,
-// })
-
 const profileImage = ref([] as any[])
 const coverImage = ref([] as any[])
 const name = ref('')
@@ -45,17 +34,9 @@ const onSubmit = async () => {
       coverImage: coverImage.value || [],
     })
 
-    console.log({
-      userId: isCurrentUser.value?.id as string,
-      name: name.value,
-      username: username.value,
-      bio: bio.value,
-      profileImage: profileImage.value,
-      coverImage: coverImage.value,
-    })
-
     await setUser({ userId: isCurrentUser.value?.id })
     useEditModal.onClose()
+    location.reload()
   } catch (error) {
     if (error instanceof Error) {
       errorMsg.value = error.message
@@ -72,7 +53,6 @@ watchEffect(() => {
     bio.value = fetchedUser.value.bio as string
   }
 })
-
 
 </script>
 <template>

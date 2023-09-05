@@ -21,8 +21,8 @@ const props = defineProps({
 })
 
 const selectedFile = ref(<Blob | null>null)
-// o Problema é aqui
-const inputImageUrl = ref(<string | ArrayBuffer | null | undefined>null)
+const InputImageUrl = ref(props.value)
+const updateInputImageUrl = ref(<string | ArrayBuffer | null | undefined>null)
 
 const emits = defineEmits<{
   (e: 'update:modelValue', value: (Blob | null)[]): void
@@ -42,7 +42,7 @@ const handleDrop = (files: any) => {
   const reader = new FileReader()
 
   reader.onload = (event: any) => {
-    inputImageUrl.value = event?.target.result
+    updateInputImageUrl.value = event?.target.result
     handleChange()
   }
   reader.readAsDataURL(file)
@@ -62,9 +62,14 @@ const { getRootProps, getInputProps,  } = useDropzone({
     class="w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700 cursor-pointer hover:opacity-80"
   >
     <input v-bind="getInputProps()" />
-    <template v-if="inputImageUrl">
+    <template v-if="updateInputImageUrl">
       <div class="flex items-center justify-center">
-        <nuxt-img :src="(inputImageUrl as string | undefined)" height="100" width="100" alt="Uploaded image" />
+        <nuxt-img :src="(updateInputImageUrl as string | undefined)" height="100" width="100" alt="Uploaded image" />
+      </div>
+    </template>
+    <template v-else-if="InputImageUrl && !updateInputImageUrl" >
+      <div class="flex items-center justify-center">
+        <nuxt-img :src="(InputImageUrl as string | undefined)" height="100" width="100" alt="Uploaded image" />
       </div>
     </template>
     <template v-else>

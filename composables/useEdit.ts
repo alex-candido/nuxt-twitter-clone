@@ -1,10 +1,10 @@
 interface EditPayloadInterface {
-  userId: string
-  name: string
-  username: string
-  bio: string
-  profileImage: any[]
-  coverImage: any[]
+  userId?: string
+  name?: string
+  username?: string
+  bio?: string
+  profileImage?: any[]
+  coverImage?: any[]
 }
 
 const useEdit = async ({
@@ -17,18 +17,22 @@ const useEdit = async ({
 }: EditPayloadInterface) => {
   const form = new FormData()
 
-  form.append('userId', userId)
-  form.append('name', name)
-  form.append('username', username)
-  form.append('bio', bio)
+  form.append('userId', userId || '')
+  form.append('name', name || '')
+  form.append('username', username || '')
+  form.append('bio', bio || '')
 
-  profileImage.forEach((mediaFile, index) => {
-    form.append('media_file_profile_' + index, mediaFile)
-  })
+  if (profileImage) {
+    profileImage?.forEach((mediaFile, index) => {
+      form.append('media_file_profile_' + index, mediaFile || [])
+    })
+  }
 
-  coverImage.forEach((mediaFile, index) => {
-    form.append('media_file_cover_' + index, mediaFile)
-  })
+  if (coverImage) {
+    coverImage?.forEach((mediaFile, index) => {
+      form.append('media_file_cover_' + index, mediaFile || [])
+    })
+  }
 
   const { data, error, execute, pending, refresh, status } = await useFetch(
     '/api/edit',

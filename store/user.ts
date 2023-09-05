@@ -6,8 +6,8 @@ interface EditPayloadInterface {
   name: string
   username: string
   bio: string
-  profileImage: any[]
-  coverImage: any[]
+  profileImage?: any[]
+  coverImage?: any[]
 }
 
 export const useUserStore = defineStore('user-store', {
@@ -42,7 +42,7 @@ export const useUserStore = defineStore('user-store', {
       profileImage,
       coverImage,
     }: EditPayloadInterface) {
-      const { data: currentUser } = await useEdit({
+      await useEdit({
         userId: userId as string,
         name,
         username,
@@ -50,7 +50,6 @@ export const useUserStore = defineStore('user-store', {
         profileImage,
         coverImage,
       })
-      this.isUser = currentUser
     },
   },
 })

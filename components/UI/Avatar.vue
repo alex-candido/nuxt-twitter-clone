@@ -49,7 +49,10 @@ const goToUser = (event: any) => {
       style="object-fit: cover; border-radius: 100%"
       class="absolute inset-0 object-cover w-full h-full"
       alt="Avatar"
-      :src="profileImage || '/images/placeholder.png'"
+      :src="
+        computed(() => profileImage || '/images/placeholder.png')
+          .value as string
+      "
       @click="goToUser"
     />
   </div>

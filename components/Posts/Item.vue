@@ -32,7 +32,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { setCurrentPosts, setCurrentPost } = usePostsStore()
+const { setCurrentPosts, setCurrentPost, setCurrentUserPosts } = usePostsStore()
 const { setCurrentuser } = useUserStore()
 const { getCurrentPost: currentPost } = storeToRefs(usePostsStore())
 const { getCurrenUser: isCurrentUser } = storeToRefs(useUserStore())
@@ -49,6 +49,7 @@ const likePost = async () => {
   })
   await setCurrentPosts()
   await setCurrentPost({ postId: props.data.id })
+  await setCurrentUserPosts({ userId: props.userId })
   await setCurrentuser()
 }
 
@@ -60,6 +61,7 @@ const unlikePost = async () => {
   })
   await setCurrentPosts()
   await setCurrentPost({ postId: props.data.id })
+  await setCurrentUserPosts({ userId: props.userId })
   await setCurrentuser()
 }
 
@@ -85,6 +87,7 @@ const toggleLike = async () => {
 
   await setCurrentPosts()
   await setCurrentPost({ postId: props.data.id })
+  await setCurrentUserPosts({ userId: props.userId })
 }
 
 const goToUser = (event: Event) => {

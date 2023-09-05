@@ -7,7 +7,7 @@ import { usePostsStore } from '../../store/posts';
 import { CurrentPost } from '../../types/post';
 const { setCurrentUserPosts } =
   usePostsStore()
-const {getCurrentUserPosts } = storeToRefs(usePostsStore())
+const { getCurrentUserPosts } = storeToRefs(usePostsStore())
 
 const props = defineProps({
   userId: {
@@ -18,16 +18,17 @@ const props = defineProps({
 
 const currentPosts = ref([] as CurrentPost[] | null)
 
-// watchEffect(async () => {
+watchEffect(async () => {
 
-//   if (!props.userId) {
-//     await setCurrentPosts()
-//   }
+  if (getCurrentUserPosts.value && getCurrentUserPosts.value.length >= 1) {
+      await setCurrentUserPosts({ userId: props.userId })
+      currentPosts.value = getCurrentUserPosts.value
+    }
 
-//   if (getCurrentPosts.value && getCurrentPosts.value.length >= 1) {
-//     currentPosts.value = getCurrentPosts.value
-//   }
-// })
+  if (getCurrentUserPosts.value && getCurrentUserPosts.value.length >= 1) {
+    currentPosts.value = getCurrentUserPosts.value
+  }
+})
 
 onBeforeMount(() => {
   watchEffect(async () => {

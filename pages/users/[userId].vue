@@ -26,9 +26,17 @@ onBeforeMount(async() => {
 </script>
 <template>
   <div>
-    <UIHeader :show-back-arrow="true" :label="fetchedUser?.name" />
-    <UsersHero :user-id="router.currentRoute.value.params.userId as string" />
-    <UsersBio :user-id="router.currentRoute.value.params.userId as string" />
-    <UsersFeed :user-id="router.currentRoute.value.params.userId as string" />
+    <div
+      v-show="!fetchedUser"
+      class="flex h-screen justify-center items-center"
+    >
+      <UISpinner />
+    </div>
+    <div v-show="fetchedUser">
+      <UIHeader :show-back-arrow="true" :label="fetchedUser?.name" />
+      <UsersHero :user-id="router.currentRoute.value.params.userId as string" />
+      <UsersBio :user-id="router.currentRoute.value.params.userId as string" />
+      <UsersFeed :user-id="router.currentRoute.value.params.userId as string" />
+    </div>
   </div>
 </template>

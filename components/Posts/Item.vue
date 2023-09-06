@@ -12,6 +12,7 @@ import { formatDistanceToNowStrict } from 'date-fns'
 import { storeToRefs } from 'pinia'
 
 import useSetLike from '../../composables/useSetLike'
+import useTrash from '../../composables/useTrash'
 import useLoginModal from '../../services/useLoginModal'
 import { usePostsStore } from '../../store/posts'
 import { useUserStore } from '../../store/user'
@@ -114,6 +115,21 @@ const onLike = async (event: Event) => {
   await toggleLike()
 }
 
+const onTrash = async (event: Event) => {
+  event.stopPropagation()
+
+  if (!isCurrentUser.value?.id) {
+    return useLoginModal.onOpen()
+  }
+
+  if (isCurrentUser.value?.id === props.data.user.id) {
+      await useTrash({postId: props.data.id})
+  } else {
+    return useLoginModal.onOpen()
+  }
+  await setCurrentPosts()
+}
+
 const createdAt = computed(() => {
   if (!props.data?.createdAt) {
     return null
@@ -177,6 +193,12 @@ const createdAt = computed(() => {
               "
             />
             <p>{{ data.likedIds?.length || 0 }}</p>
+          </div>
+          <div
+            class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500"
+            @click="onTrash"
+          >
+            <Icon name="ph:trash" size="1.5rem" />
           </div>
         </div>
       </div>

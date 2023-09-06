@@ -1,6 +1,4 @@
-<script lang="ts" setup>
-// const { data, status } = useAuth()
-</script>
+<script lang="ts" setup></script>
 <template>
   <div>
     <UIHeader label="Home" />

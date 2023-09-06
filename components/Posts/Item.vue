@@ -11,8 +11,8 @@
 import { formatDistanceToNowStrict } from 'date-fns'
 import { storeToRefs } from 'pinia'
 
+import usePostTrash from '../../composables/usePostTrash'
 import useSetLike from '../../composables/useSetLike'
-import useTrash from '../../composables/useTrash'
 import useLoginModal from '../../services/useLoginModal'
 import { usePostsStore } from '../../store/posts'
 import { useUserStore } from '../../store/user'
@@ -123,7 +123,7 @@ const onTrash = async (event: Event) => {
   }
 
   if (isCurrentUser.value?.id === props.data.user.id) {
-      await useTrash({postId: props.data.id})
+      await usePostTrash({postId: props.data.id})
   } else {
     return useLoginModal.onOpen()
   }

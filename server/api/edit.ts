@@ -178,6 +178,20 @@ export default defineEventHandler(async (event) => {
       console.log(updatedUser)
       return updatedUser
     }
+
+    if (!files.media_file_cover_0 && !files.media_file_profile_0) {
+      const updatedUser = await updatedUserEdit({
+        userId: fields.userId as string,
+        name: fields.name as string,
+        username: fields.username as string,
+        bio: fields.bio as string,
+        profileImage: user.profileImage as string,
+        coverImage: user.coverImage as string,
+      })
+
+      console.log(updatedUser)
+      return updatedUser
+    }
   } catch (error) {
     return sendError(
       event,

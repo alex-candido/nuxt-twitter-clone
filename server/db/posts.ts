@@ -101,3 +101,13 @@ export const updatedPost = async (postData: UpdatedPostProps): Promise<any> => {
   }
   return post
 }
+
+export const deletePost = async (postId: string) => {
+  const post = await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  })
+
+  return post
+}

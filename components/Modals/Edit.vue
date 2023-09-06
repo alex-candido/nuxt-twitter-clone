@@ -68,13 +68,13 @@ watchEffect(() => {
       <div class="flex flex-col gap-4">
         <UIImageUpload
           v-model="profileImage"
-          :value="computed(() => fetchedUser?.profileImage).value as string"
+          :value="computed(() => isCurrentUser?.profileImage).value as string"
           :disabled="isLoading"
           label="Upload profile image"
         />
         <UIImageUpload
           v-model="coverImage"
-          :value="computed(() => fetchedUser?.coverImage).value as string"
+          :value="computed(() => isCurrentUser?.coverImage).value as string"
           :disabled="isLoading"
           label="Upload cover image"
         />

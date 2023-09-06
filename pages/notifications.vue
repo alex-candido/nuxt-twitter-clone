@@ -19,6 +19,6 @@ onBeforeMount(() => {
 <template>
   <div>
     <UIHeader show-back-arrow label="Notifications" />
-    <UINotificationsFeed />
+    <NotificationFeed />
   </div>
 </template>

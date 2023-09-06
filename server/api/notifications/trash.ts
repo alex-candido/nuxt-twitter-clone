@@ -1,4 +1,4 @@
-import { deletePost, getPostById } from '../db/posts'
+import { deleteNotification, getNotificationById } from '../../db/notifications'
 
 export default defineEventHandler(async (event) => {
   const method = event.method
@@ -10,12 +10,12 @@ export default defineEventHandler(async (event) => {
     )
   }
 
-  const { postId } = await readBody(event)
+  const { notificationId } = await readBody(event)
 
-  const post = await getPostById(postId)
+  const notification = await getNotificationById(notificationId)
 
   try {
-    const deleted = await deletePost(post.id)
+    const deleted = await deleteNotification(notification.id)
 
     console.log(deleted)
     return { method, deleted }

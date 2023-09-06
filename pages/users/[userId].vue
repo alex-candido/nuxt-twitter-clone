@@ -32,7 +32,7 @@ onBeforeMount(async() => {
     >
       <UISpinner />
     </div>
-    <div v-show="fetchedUser">
+    <div>
       <UIHeader :show-back-arrow="true" :label="fetchedUser?.name" />
       <UsersHero :user-id="router.currentRoute.value.params.userId as string" />
       <UsersBio :user-id="router.currentRoute.value.params.userId as string" />

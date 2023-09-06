@@ -46,7 +46,7 @@ onBeforeMount(() => {
   >
     No Posts
   </div>
-  <div v-if="currentPosts?.length" v-show="currentPosts?.length > 1">
+  <div>
     <div
       v-for="(post, index) in currentPosts"
       :key="index"

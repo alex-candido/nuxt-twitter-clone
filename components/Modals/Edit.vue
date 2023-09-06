@@ -81,6 +81,7 @@ watchEffect(() => {
         <div class="w-full">
           <input
             v-model="name"
+            placeholder="Name"
             :disabled="isLoading"
             class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
           />
@@ -88,6 +89,7 @@ watchEffect(() => {
         <div class="w-full">
           <input
             v-model="username"
+            placeholder="Username"
             :disabled="isLoading"
             class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
           />
@@ -95,6 +97,7 @@ watchEffect(() => {
         <div class="w-full">
           <input
             v-model="bio"
+            placeholder="Bio"
             :disabled="isLoading"
             class="w-full p-4 text-lg dark:bg-dim-900 border-2 border-neutral-600 rounded-md outline-none text-white focus:border-sky-500 focus:border-2 transition disabled:bg-neutral-900 disabled:opacity-70 disabled:cursor-not-allowed"
           />

@@ -22,6 +22,24 @@ export const createNotification = async (
   return notification
 }
 
+export const getNotificationById = async (
+  notificationId: string,
+): Promise<any> => {
+  const notification = await prisma.notification.findUnique({
+    where: {
+      id: notificationId,
+    },
+    include: {
+      user: true,
+    },
+  })
+
+  if (!notification) {
+    console.log('Not found post')
+  }
+  return notification
+}
+
 export const getNotificationsByUserId = async (
   userId: string,
 ): Promise<any> => {
@@ -57,4 +75,14 @@ export const updateIsNotificationUser = async (
     console.log('Not found users')
   }
   return user
+}
+
+export const deleteNotification = async (notificationId: string) => {
+  const notification = await prisma.notification.delete({
+    where: {
+      id: notificationId,
+    },
+  })
+
+  return notification
 }

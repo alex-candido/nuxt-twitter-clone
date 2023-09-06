@@ -1,12 +1,12 @@
 /* eslint-disable object-shorthand */
 
-interface SetLikePayloadInterface {
+interface SetPostTrashPayloadInterface {
   postId: string
 }
 
-const useTrash = async ({ postId }: SetLikePayloadInterface) => {
+const usePostTrash = async ({ postId }: SetPostTrashPayloadInterface) => {
   const { data, error, execute, pending, refresh, status } = await useFetch(
-    `/api/trash`,
+    `/api/posts/trash`,
     {
       method: 'DELETE',
       body: { postId: postId },
@@ -23,4 +23,4 @@ const useTrash = async ({ postId }: SetLikePayloadInterface) => {
   }
 }
 
-export default useTrash
+export default usePostTrash
